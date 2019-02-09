@@ -6,5 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class SummaryData {
-    private double carHiredOrDailyRate;
+    private double carHiredOrDailyCost;
+    private double carDailyReplacementCost;
 }

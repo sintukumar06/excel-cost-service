@@ -25,17 +25,26 @@ public class ComputeService {
     private List<SummaryData> getSummaryDataList(UnitTrainInputs inputs) {
         List<SummaryData> summaryDataList = new ArrayList<>();
         if (Objects.isNull(inputs.getUnitTrains()))
-            return Arrays.asList(SummaryData.builder().build());
+            return Arrays.asList(getDummySummaryData());
 
         for (int i = 0; i < inputs.getUnitTrains().size(); i++) {
-            summaryDataList.add(createSummaryData(inputs, i));
+            summaryDataList.add(isValidDivision(inputs, i) ? getDummySummaryData() : createSummaryData(inputs, i));
         }
         return summaryDataList;
     }
 
+    private SummaryData getDummySummaryData() {
+        return SummaryData.builder().build();
+    }
+
+    private boolean isValidDivision(UnitTrainInputs inputs, int i) {
+        return inputs.getUnitTrains().get(i).getDivision().equalsIgnoreCase("NONE");
+    }
+
     private SummaryData createSummaryData(UnitTrainInputs inputs, int i) {
         return SummaryData.builder()
-                .carHiredOrDailyRate(carService.getCarHireOrDailyRate(inputs, i))
+                .carHiredOrDailyCost(carService.getCarHireOrDailyRate(inputs, i))
+                .carDailyReplacementCost(carService.getCarDailyReplacementRate(inputs, i))
                 .build();
     }
 }
