@@ -1,0 +1,26 @@
+{
+  "mktgMajorGroup": "COAL",
+  "numberOfCars": 132,
+  "ladingWeightPerCar": 89,
+  "numberOfLocomotives": 4,
+  "mktgCarType": "HE",
+  "carOwner": "PRIVATE",
+  "emptyReturnRatio": 1,
+  "trainType": "UNIT BULK",
+  "manualInput": {
+    "carHireDailyRate": 12,
+    "carHirePerMile": 5
+  },
+  "unitTrains": [
+    {
+      "division": "ALABAMA",
+      "loadedMiles": 273,
+      "locomotiveDaysOnline": 2,
+      "carDaysOnline": 2.5,
+      "numberOfTrainStarts": 3,
+      "carHiredOrDailyRate": true,
+      "avgJointFacilityOrHaulageOrLease": false,
+      "specializedFacilitySvcs": false
+    }
+  ]
+}

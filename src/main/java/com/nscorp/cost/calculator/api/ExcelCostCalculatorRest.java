@@ -1,32 +1,24 @@
-/**
- * 
- */
 package com.nscorp.cost.calculator.api;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.nscorp.cost.calculator.model.UnitTrainInputs;
+import com.nscorp.cost.calculator.service.ComputeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-
-/**
- * @author a6poc
- *
- */
 @RestController
 public class ExcelCostCalculatorRest {
-
     private static final String APPLICATION_JSON_VALUE = "application/json";
+    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    @Autowired
+    private ComputeService computeService;
 
     @CrossOrigin
-    @RequestMapping(value = "/test", method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public String calculateAndSaveService1(@RequestBody String formula) throws JsonProcessingException
-    {
-    	return "{ \"hello\": \"World\"} ";
+    @RequestMapping(value = "/calculate", method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
+    public String calculateAndSaveService1(@RequestBody String request) throws JsonProcessingException {
+        UnitTrainInputs unitTrainInputs = gson.fromJson(request, UnitTrainInputs.class);
+        return gson.toJson(computeService.computeCost(unitTrainInputs));
     }
 }
