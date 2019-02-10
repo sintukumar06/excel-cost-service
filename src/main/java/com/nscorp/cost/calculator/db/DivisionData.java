@@ -36,12 +36,18 @@ public class DivisionData {
     private double cmLocoOperationMaint;
     @Column(name = "CM_JFHL_LINES")
     private double cmJFHLLines;
+    @Column(name = "CM_SHARED_ASSET_AREA")
+    private double cmSharedAssetAreaOnLink;
     @Column(name = "GTM_NETWORK_ECONOMIC")
     private double networkEconomic;
     @Column(name = "CREW_WAGES_TOTAL")
     private double crewWagesTotal;
     @Column(name = "GA_TRANSPORTATION")
     private double gaTransportation;
+    @Column(name = "ORIG_SHARED_ASSET_AREA")
+    private double sharedAssetAreaCostOnNodes;
+    @Column(name = "TOTAL_CARLOAD_ORIGINATION")
+    private double totalCarloadOrigs;
 
     public double getBridgeAndTrackMaintenanceByGTM() {
         return getBridgeAndTrackMaintenance() / getGrossTonMiles();
@@ -65,5 +71,21 @@ public class DivisionData {
 
     public double getCommunicationAndSignalByCM() {
         return getCmCommunicationAndSignalCost() / getCarMiles();
+    }
+
+    public double getLocoOpsMaintenanceByCM() {
+        return getCmLocoOperationMaint() / getCarMiles();
+    }
+
+    public double getSharedAssetAreaCostByCM() {
+        return getCmSharedAssetAreaOnLink() / getCarMiles();
+    }
+
+    public double getJFHLCostByCM() {
+        return getJfhlLines() / getCarMiles();
+    }
+
+    public double getSharedAssetAreaCostByOrigination() {
+        return getSharedAssetAreaCostOnNodes() / getTotalCarloadOrigs();
     }
 }

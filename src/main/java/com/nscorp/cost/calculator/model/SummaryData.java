@@ -17,5 +17,13 @@ public class SummaryData {
     private double gaMarketingCost;
     private double gaMechanicalCost;
     private double gaTransportationCost;
+    private double locoOpsAndMaintenanceCost;
+    private double sharedAssetAreaCost;
+    private double specializedFacilitiesServicesCost;
+    private double jointFacilityHaulageLeaseCost;
+    private double networkEconomicCost;
+    private double locomotiveEconomicCost;
     private double gaTaxes;
+    private double terminalYardOpsInspectionCost;
+    private double trainStartCost;
 }

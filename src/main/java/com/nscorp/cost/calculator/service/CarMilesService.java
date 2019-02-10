@@ -13,10 +13,20 @@ public class CarMilesService {
 
     public double getCommunicationAndSignalCost(UnitTrainInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
-        return unitTrain.getLoadedMiles()
-                * inputs.getNumberOfCars()
-                * (1 + inputs.getEmptyReturnRatio())
-                * getCommunicationAndSignalByCM(unitTrain);
+        return computeCost(inputs, unitTrain, getCommunicationAndSignalByCM(unitTrain));
+    }
+
+    public double getLocoOpsAndMaintenanceCost(UnitTrainInputs inputs, int index) {
+        UnitTrain unitTrain = inputs.getUnitTrains().get(index);
+        return computeCost(inputs, unitTrain, getLocoOpsMaintenanceByCM(unitTrain));
+    }
+
+    private double getLocoOpsMaintenanceByCM(UnitTrain unitTrain) {
+        return gtmRepository.findOne(unitTrain.getDivision()).getLocoOpsMaintenanceByCM();
+    }
+
+    private double computeCost(UnitTrainInputs inputs, UnitTrain unitTrain, double rate) {
+        return unitTrain.getLoadedMiles() * inputs.getNumberOfCars() * (1 + inputs.getEmptyReturnRatio()) * rate;
     }
 
     private double getCommunicationAndSignalByCM(UnitTrain unitTrain) {

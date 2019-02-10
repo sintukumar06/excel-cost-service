@@ -15,6 +15,7 @@ public class UnitTrainInputs {
     private String carOwner;
     private float emptyReturnRatio;
     private String trainType;
+    private List<SwitchEvent> switchEvents;
     private ManualInput manualInput;
     private List<UnitTrain> unitTrains;
 }

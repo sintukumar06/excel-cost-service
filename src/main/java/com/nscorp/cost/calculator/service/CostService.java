@@ -16,11 +16,17 @@ public class CostService {
     @Autowired
     private CarService carService;
     @Autowired
+    private JFHLService jfhlService;
+    @Autowired
     private CarMilesService cmService;
     @Autowired
     private GeneralAdminService gaService;
     @Autowired
+    private SharedAssetServices saaService;
+    @Autowired
     private GrossTonMilesService gtmService;
+    @Autowired
+    private SpecialFacilityService sfService;
 
     public ResponseData computeCost(UnitTrainInputs inputs) {
         return ResponseData.builder()
@@ -56,10 +62,14 @@ public class CostService {
                 .gaEngineeringCost(gtmService.getGAEngineeringCost(inputs, i))
                 .carHiredOrDailyCost(carService.getCarHireOrDailyRate(inputs, i))
                 .gaCustomerServiceCost(gaService.getGACustomerServiceCost(inputs))
+                .sharedAssetAreaCost(saaService.getSharedAssetAreaCost(inputs, i))
                 .gaTransportationCost(gaService.getGATransportationCost(inputs, i))
                 .fuelingLocomotivesCost(gtmService.getFuelingLocomotiveCost(inputs, i))
                 .carDailyReplacementCost(carService.getCarDailyReplacementRate(inputs, i))
+                .locomotiveEconomicCost(cmService.getLocoOpsAndMaintenanceCost(inputs, i))
+                .specializedFacilitiesServicesCost(sfService.getSharedAssetAreaCost(inputs, i))
                 .communicationAndSignalCost(cmService.getCommunicationAndSignalCost(inputs, i))
+                .jointFacilityHaulageLeaseCost(jfhlService.getJointFacilityHaulageLeaseCost(inputs, i))
                 .bridgeAndTrackMaintenanceCost(gtmService.getBridgeAndTrackMaintenanceCost(inputs, i))
                 .build();
     }
