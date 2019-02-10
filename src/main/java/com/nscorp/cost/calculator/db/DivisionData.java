@@ -65,6 +65,10 @@ public class DivisionData {
         return getGaMechanical() / getGrossTonMiles();
     }
 
+    public double getNetworkEconomicByGTM() {
+        return getNetworkEconomic() / getGrossTonMiles();
+    }
+
     public double getGATransportbyCW() {
         return getGaTransportation() / getCrewWagesTotal();
     }

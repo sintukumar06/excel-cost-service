@@ -11,4 +11,5 @@ public class ManualInput {
     private float tasdPerCar;
     private float tareWeightAdjust;
     private float locoWeight;
+    private float networkEconomicFactor;
 }
