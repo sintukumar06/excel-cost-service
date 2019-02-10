@@ -7,4 +7,6 @@ import lombok.*;
 public class ManualInput {
     private float carHireDailyRate;
     private float carHirePerMile;
+    private float tareWeightAdjust;
+    private float locoWeight;
 }

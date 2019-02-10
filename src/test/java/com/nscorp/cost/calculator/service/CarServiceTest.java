@@ -1,5 +1,6 @@
 package com.nscorp.cost.calculator.service;
 
+import com.nscorp.cost.calculator.ExcelCostCalculatorApplication;
 import com.nscorp.cost.calculator.model.ManualInput;
 import com.nscorp.cost.calculator.model.UnitTrain;
 import com.nscorp.cost.calculator.model.UnitTrainInputs;
@@ -7,21 +8,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 
 @Slf4j
-@DataJpaTest
 @RunWith(SpringRunner.class)
+@ContextConfiguration(classes = {ExcelCostCalculatorApplication.class})
 public class CarServiceTest {
     @Autowired
     private CarService carService;
 
     @Test
     public void calculateCarHireDailyRateWhenManualInputIsGiven() {
-        float result = carService.getCarHireOrDailyRate();
+        float result = carService.getCarHireOrDailyRate(getRequestInput(), 0);
         log.info("Result calculated :" + result);
     }
 

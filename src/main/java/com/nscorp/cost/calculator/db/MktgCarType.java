@@ -2,20 +2,21 @@ package com.nscorp.cost.calculator.db;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "MKTG_CAR_TYPE_DATA")
 public class MktgCarType {
-    @EmbeddedId
-    private MktgCarTypeId mktgCarTypeId;
-
+    @Id
+    @Column(name = "CAR_TYPE_OWNER")
+    private String carTypeOwner;
+    @Column(name = "MARKETING_CAR_TYPE")
+    private String marketingCarType;
+    @Column(name = "CAR_OWNER")
+    private String carOwner;
     @Column(name = "TARE")
-    private int tare;
+    private float tare;
     @Column(name = "NUMBER_OF_CARS")
     private int numberOfCars;
     @Column(name = "MILEAGE_RATE")

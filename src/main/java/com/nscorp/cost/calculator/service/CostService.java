@@ -12,9 +12,13 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class ComputeService {
+public class CostService {
     @Autowired
     private CarService carService;
+    @Autowired
+    private GrossTonMilesService gtmService;
+    @Autowired
+    private CarMilesService cmService;
 
     public ResponseData computeCost(UnitTrainInputs inputs) {
         return ResponseData.builder()
@@ -44,7 +48,10 @@ public class ComputeService {
     private SummaryData createSummaryData(UnitTrainInputs inputs, int i) {
         return SummaryData.builder()
                 .carHiredOrDailyCost(carService.getCarHireOrDailyRate(inputs, i))
+                .fuelingLocomotivesCost(gtmService.getFuelingLocomotiveCost(inputs, i))
                 .carDailyReplacementCost(carService.getCarDailyReplacementRate(inputs, i))
+                .communicationAndSignalCost(cmService.getCommunicationAndSignalCost(inputs, i))
+                .bridgeAndTrackMaintenanceCost(gtmService.getBridgeAndTrackMaintenanceCost(inputs, i))
                 .build();
     }
 }

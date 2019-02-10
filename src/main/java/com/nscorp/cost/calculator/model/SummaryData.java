@@ -8,4 +8,7 @@ import lombok.Data;
 public class SummaryData {
     private double carHiredOrDailyCost;
     private double carDailyReplacementCost;
+    private double bridgeAndTrackMaintenanceCost;
+    private double communicationAndSignalCost;
+    private double fuelingLocomotivesCost;
 }

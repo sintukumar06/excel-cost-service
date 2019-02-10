@@ -1,6 +1,5 @@
 package com.nscorp.cost.calculator.service;
 
-import com.nscorp.cost.calculator.db.MktgCarTypeId;
 import com.nscorp.cost.calculator.model.ManualInput;
 import com.nscorp.cost.calculator.model.UnitTrain;
 import com.nscorp.cost.calculator.model.UnitTrainInputs;
@@ -61,8 +60,8 @@ public class CarService {
         return carRepository.findOne(buildMktgCarKey(input)).getDailyEquipmentCost();
     }
 
-    private MktgCarTypeId buildMktgCarKey(UnitTrainInputs input) {
-        return MktgCarTypeId.builder().marketingCarType(input.getMktgCarType()).carOwner(input.getCarOwner()).build();
+    private String buildMktgCarKey(UnitTrainInputs input) {
+        return input.getMktgCarType().concat(input.getCarOwner());
     }
 
     private boolean isManualCarHireRatePresent(ManualInput input) {
