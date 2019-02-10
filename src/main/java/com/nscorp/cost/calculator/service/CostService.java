@@ -27,6 +27,8 @@ public class CostService {
     private GrossTonMilesService gtmService;
     @Autowired
     private SpecialFacilityService sfService;
+    @Autowired
+    private TerminalAndYardService tyService;
 
     public ResponseData computeCost(UnitTrainInputs inputs) {
         return ResponseData.builder()
@@ -68,10 +70,11 @@ public class CostService {
                 .fuelingLocomotivesCost(gtmService.getFuelingLocomotiveCost(inputs, i))
                 .carDailyReplacementCost(carService.getCarDailyReplacementRate(inputs, i))
                 .locomotiveEconomicCost(cmService.getLocoOpsAndMaintenanceCost(inputs, i))
+                .terminalYardOpsInspectionCost(tyService.getTerminalAndYardOpsCost(inputs))
                 .specializedFacilitiesServicesCost(sfService.getSharedAssetAreaCost(inputs, i))
                 .communicationAndSignalCost(cmService.getCommunicationAndSignalCost(inputs, i))
-                .jointFacilityHaulageLeaseCost(jfhlService.getJointFacilityHaulageLeaseCost(inputs, i))
                 .bridgeAndTrackMaintenanceCost(gtmService.getBridgeAndTrackMaintenanceCost(inputs, i))
+                .jointFacilityHaulageLeaseCost(jfhlService.getJointFacilityHaulageLeaseCost(inputs, i))
                 .build();
     }
 }
