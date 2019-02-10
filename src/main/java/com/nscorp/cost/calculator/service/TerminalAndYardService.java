@@ -1,7 +1,6 @@
 package com.nscorp.cost.calculator.service;
 
 import com.nscorp.cost.calculator.model.SwitchEvent;
-import com.nscorp.cost.calculator.model.UnitTrain;
 import com.nscorp.cost.calculator.model.UnitTrainInputs;
 import com.nscorp.cost.calculator.repo.TerminalYardRepository;
 import org.springframework.beans.factory.annotation.Autowired;

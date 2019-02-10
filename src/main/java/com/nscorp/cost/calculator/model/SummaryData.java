@@ -23,6 +23,7 @@ public class SummaryData {
     private double jointFacilityHaulageLeaseCost;
     private double networkEconomicCost;
     private double locomotiveEconomicCost;
+    private double carMaintenance;
     private double gaTaxes;
     private double terminalYardOpsInspectionCost;
     private double trainStartCost;
