@@ -12,9 +12,9 @@ import java.util.Objects;
 @Service
 public class GrossTonMilesService {
     @Autowired
-    private DivisionDataRepository gtmRepository;
-    @Autowired
     private MktgCarRepository carRepository;
+    @Autowired
+    private DivisionDataRepository gtmRepository;
 
     public double getBridgeAndTrackMaintenanceCost(UnitTrainInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
@@ -24,6 +24,24 @@ public class GrossTonMilesService {
     public double getFuelingLocomotiveCost(UnitTrainInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
         return calculateCost(inputs, unitTrain, getFuelingLocomotiveByGTM(unitTrain));
+    }
+
+    public double getGAEngineeringCost(UnitTrainInputs inputs, int index) {
+        UnitTrain unitTrain = inputs.getUnitTrains().get(index);
+        return calculateCost(inputs, unitTrain, getGaEngineeringByGTM(unitTrain));
+    }
+
+    public double getGAMechanicalCost(UnitTrainInputs inputs, int index) {
+        UnitTrain unitTrain = inputs.getUnitTrains().get(index);
+        return calculateCost(inputs, unitTrain, getGaMechanicalByGTM(unitTrain));
+    }
+
+    private double getGaMechanicalByGTM(UnitTrain unitTrain) {
+        return gtmRepository.findOne(unitTrain.getDivision()).getGAMechanicalByGTM();
+    }
+
+    private double getGaEngineeringByGTM(UnitTrain unitTrain) {
+        return gtmRepository.findOne(unitTrain.getDivision()).getGAEngineeringByGTM();
     }
 
     private double getFuelingLocomotiveByGTM(UnitTrain unitTrain) {

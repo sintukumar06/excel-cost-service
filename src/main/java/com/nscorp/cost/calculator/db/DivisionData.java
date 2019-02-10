@@ -51,6 +51,18 @@ public class DivisionData {
         return getFuelingLocomotives() / getGrossTonMiles();
     }
 
+    public double getGAEngineeringByGTM() {
+        return getGaEngineering() / getGrossTonMiles();
+    }
+
+    public double getGAMechanicalByGTM() {
+        return getGaMechanical() / getGrossTonMiles();
+    }
+
+    public double getGATransportbyCW() {
+        return getGaTransportation() / getCrewWagesTotal();
+    }
+
     public double getCommunicationAndSignalByCM() {
         return getCmCommunicationAndSignalCost() / getCarMiles();
     }

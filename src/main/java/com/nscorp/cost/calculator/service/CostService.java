@@ -16,9 +16,11 @@ public class CostService {
     @Autowired
     private CarService carService;
     @Autowired
-    private GrossTonMilesService gtmService;
-    @Autowired
     private CarMilesService cmService;
+    @Autowired
+    private GeneralAdminService gaService;
+    @Autowired
+    private GrossTonMilesService gtmService;
 
     public ResponseData computeCost(UnitTrainInputs inputs) {
         return ResponseData.builder()
@@ -47,7 +49,14 @@ public class CostService {
 
     private SummaryData createSummaryData(UnitTrainInputs inputs, int i) {
         return SummaryData.builder()
+                .gaTaxes(gaService.getGATaxesCost(inputs))
+                .gaAdminCost(gaService.getGeneralAdminCost(inputs))
+                .gaMarketingCost(gaService.getGAMarketingCost(inputs))
+                .gaMechanicalCost(gtmService.getGAMechanicalCost(inputs, i))
+                .gaEngineeringCost(gtmService.getGAEngineeringCost(inputs, i))
                 .carHiredOrDailyCost(carService.getCarHireOrDailyRate(inputs, i))
+                .gaCustomerServiceCost(gaService.getGACustomerServiceCost(inputs))
+                .gaTransportationCost(gaService.getGATransportationCost(inputs, i))
                 .fuelingLocomotivesCost(gtmService.getFuelingLocomotiveCost(inputs, i))
                 .carDailyReplacementCost(carService.getCarDailyReplacementRate(inputs, i))
                 .communicationAndSignalCost(cmService.getCommunicationAndSignalCost(inputs, i))

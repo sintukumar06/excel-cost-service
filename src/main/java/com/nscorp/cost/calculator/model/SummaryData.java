@@ -11,4 +11,11 @@ public class SummaryData {
     private double bridgeAndTrackMaintenanceCost;
     private double communicationAndSignalCost;
     private double fuelingLocomotivesCost;
+    private double gaAdminCost;
+    private double gaCustomerServiceCost;
+    private double gaEngineeringCost;
+    private double gaMarketingCost;
+    private double gaMechanicalCost;
+    private double gaTransportationCost;
+    private double gaTaxes;
 }
