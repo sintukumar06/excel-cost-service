@@ -1,21 +1,20 @@
 buildscript {
-	ext {
-		springBootVersion = '1.5.9.RELEASE'
-	}
-	repositories {
-        	flatDir {
-    			dirs 'projectjars'
-    		}
-    		jcenter()
-            //mavenLocal()
-    		//maven { url 'http://imdev.nscorp.com/nexus/content/groups/public' }
+    ext {
+        springBootVersion = '1.5.9.RELEASE'
     }
-	dependencies {
-		//classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE")   
-		//for cargo
-		classpath 'com.bmuschko:gradle-cargo-plugin:2.3' 
-	}
+    repositories {
+        flatDir {
+            dirs 'projectjars'
+        }
+        jcenter()
+        //mavenLocal()
+        //maven { url 'http://imdev.nscorp.com/nexus/content/groups/public' }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE")
+        //for cargo
+        classpath 'com.bmuschko:gradle-cargo-plugin:2.3'
+    }
 }
 
 apply plugin: 'java'
@@ -40,7 +39,7 @@ war {
     configurations {
         runtime.exclude module: 'tomcat-embed-websocket'
     }
-    
+
     /*
     from('src/main/java') {
         include 'config/*'
@@ -49,37 +48,38 @@ war {
     */
 
     webXml = file('src/web.xml')
-    archiveName='excelCostService.war'
+    archiveName = 'excelCostService.war'
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 configurations {
-	providedRuntime
+    providedRuntime
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'com.h2database:h2'
+    compile 'org.projectlombok:lombok'
+    compile 'com.google.code.gson:gson'
     compile 'org.apache.commons:commons-lang3:3.8.1'
-    
-    compile("org.springframework.boot:spring-boot-starter-web")
-	//compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	//implementation('org.springframework.boot:spring-boot-starter-data-jpa')
-	//implementation('org.springframework.boot:spring-boot-starter-jdbc')
-	//implementation('org.springframework.boot:spring-boot-starter-web')
-	runtimeOnly('org.springframework.boot:spring-boot-devtools')
-	runtimeOnly('mysql:mysql-connector-java')
-	providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
-	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
-	//compile('com.microsoft.sqlserver:mssql-jdbc')
-	compile('org.mockito:mockito-core:2.23.0')
-	
-	//for cargo
+    compile 'org.apache.commons:commons-collections4:4.3'
+    //compile('com.microsoft.sqlserver:mssql-jdbc')
+    compile('org.mockito:mockito-core:2.23.0')
+    //providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+    //providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+    //for cargo
     cargo "org.codehaus.cargo:cargo-core-uberjar:1.5.0",
-          "org.codehaus.cargo:cargo-ant:1.5.0",
-          "org.wildfly.core:wildfly-controller-client:3.0.10.Final"
+            "org.codehaus.cargo:cargo-ant:1.5.0",
+            "org.wildfly.core:wildfly-controller-client:3.0.10.Final"
 }
 
 cargo {
