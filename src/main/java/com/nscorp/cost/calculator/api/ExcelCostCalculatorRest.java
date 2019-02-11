@@ -1,6 +1,5 @@
 package com.nscorp.cost.calculator.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nscorp.cost.calculator.model.UnitTrainInputs;
@@ -16,8 +15,9 @@ public class ExcelCostCalculatorRest {
     private CostService costService;
 
     @CrossOrigin
-    @RequestMapping(value = "/calculate", method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
-    public String calculateAndSaveService1(@RequestBody String request) throws JsonProcessingException {
+    @RequestMapping(value = "/calculate", method = RequestMethod.POST,
+            consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public String calculateAndSaveService1(@RequestBody String request) {
         UnitTrainInputs unitTrainInputs = gson.fromJson(request, UnitTrainInputs.class);
         return gson.toJson(costService.computeCost(unitTrainInputs));
     }

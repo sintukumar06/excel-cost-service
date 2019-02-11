@@ -1,0 +1,41 @@
+{
+  "mktgMajorGroup": "COAL",
+  "numberOfCars": 132,
+  "ladingWeightPerCar": 98,
+  "numberOfLocomotives": 4,
+  "mktgCarType": "HE",
+  "carOwner": "PRIVATE",
+  "emptyReturnRatio": 1,
+  "trainType": "UNIT BULK",
+  "switchEvents": [
+    {
+      "switchType": "INTERCHANGE",
+      "cityAndState": "AYER, MA"
+    },
+    {
+      "switchType": "INTERCHANGE",
+      "cityAndState": "MOBILE, AL"
+    }
+  ],
+  "manualInput": {
+    "carHireDailyRate": 0,
+    "carHirePerMile": 0,
+    "bhrrFactorPerCar": 850.00,
+    "tasdPerCar": 150.87,
+    "tareWeightAdjust": 0,
+    "locoWeight": 203.44,
+    "networkEconomicFactor": 212.79
+  },
+  "unitTrains": [
+    {
+      "division": "S JERSEY CSAO",
+      "loadedMiles": 273,
+      "locomotiveDaysOnline": 2,
+      "carDaysOnline": 2.5,
+      "numberOfTrainStarts": 3,
+      "carHiredOrDailyRate": true,
+      "avgJointFacilityOrHaulageOrLease": true,
+      "specializedFacilitySvcs": true
+    }
+  ]
+}
