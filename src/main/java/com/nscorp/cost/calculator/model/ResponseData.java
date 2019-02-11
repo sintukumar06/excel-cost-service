@@ -8,5 +8,9 @@ import java.util.List;
 @Data
 @Builder
 public class ResponseData {
-    private List<SummaryData> summaryDataList;
+    private CostSummary vec;
+    private CostSummary vrc;
+    private CostSummary coalDumping;
+    private List<PushersInfo> pusherData;
+    private List<SummaryData> summaryData;
 }

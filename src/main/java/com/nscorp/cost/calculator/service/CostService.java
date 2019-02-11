@@ -36,7 +36,7 @@ public class CostService {
 
     public ResponseData computeCost(UnitTrainInputs inputs) {
         return ResponseData.builder()
-                .summaryDataList(getSummaryDataList(inputs))
+                .summaryData(getSummaryDataList(inputs))
                 .build();
     }
 
