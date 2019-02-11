@@ -73,12 +73,12 @@ public class GrossTonMilesService {
         return isManualLocoWeightPresent(inputs) ? inputs.getManualInput().getLocoWeight() : 0f;
     }
 
-    private boolean isManualNetworkEconomicPresent(UnitTrainInputs inputs) {
-        return !Objects.isNull(inputs.getManualInput()) && inputs.getManualInput().getNetworkEconomicFactor() > 0;
-    }
-
     private boolean isManualLocoWeightPresent(UnitTrainInputs inputs) {
         return !Objects.isNull(inputs.getManualInput()) && inputs.getManualInput().getLocoWeight() > 0;
+    }
+
+    private boolean isManualNetworkEconomicPresent(UnitTrainInputs inputs) {
+        return !Objects.isNull(inputs.getManualInput()) && inputs.getManualInput().getNetworkEconomicFactor() > 0;
     }
 
     private float getTare(UnitTrainInputs inputs) {

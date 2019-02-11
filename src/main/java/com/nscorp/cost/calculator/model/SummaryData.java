@@ -27,4 +27,43 @@ public class SummaryData {
     private double gaTaxes;
     private double terminalYardOpsInspectionCost;
     private double trainStartCost;
+
+    public double getPusherCost() {
+        return getBridgeAndTrackMaintenanceCost()
+                + getCommunicationAndSignalCost()
+                + getFuelingLocomotivesCost()
+                + getGaEngineeringCost()
+                + getGaMechanicalCost()
+                + getGaTransportationCost()
+                + getLocoOpsAndMaintenanceCost()
+                + getNetworkEconomicCost()
+                + getLocomotiveEconomicCost();
+    }
+
+    public double getVecTotal() {
+        return getCarHiredOrDailyCost()
+                + getBridgeAndTrackMaintenanceCost()
+                + getCommunicationAndSignalCost()
+                + getFuelingLocomotivesCost()
+                + getGaAdminCost()
+                + getGaCustomerServiceCost()
+                + getGaEngineeringCost()
+                + getGaMarketingCost()
+                + getGaMechanicalCost()
+                + getGaTransportationCost()
+                + getLocoOpsAndMaintenanceCost()
+                + getSharedAssetAreaCost()
+                + getSpecializedFacilitiesServicesCost()
+                + getJointFacilityHaulageLeaseCost()
+                + getNetworkEconomicCost()
+                + getLocomotiveEconomicCost()
+                + getCarMaintenance()
+                + getGaTaxes()
+                + getTerminalYardOpsInspectionCost()
+                + getTrainStartCost();
+    }
+
+    public double getVrcTotal() {
+        return getVecTotal() + getCarDailyReplacementCost() - getCarHiredOrDailyCost();
+    }
 }

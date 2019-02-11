@@ -81,6 +81,10 @@ public class DivisionData {
         return getCmLocoOperationMaint() / getCarMiles();
     }
 
+    public double getLocoOpsMaintenanceByGTM() {
+        return getLocoOperationMaint() / getGrossTonMiles();
+    }
+
     public double getSharedAssetAreaCostByCM() {
         return getCmSharedAssetAreaOnLink() / getCarMiles();
     }

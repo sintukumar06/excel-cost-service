@@ -1,81 +1,98 @@
 package com.nscorp.cost.calculator.service;
 
-import com.nscorp.cost.calculator.model.ResponseData;
-import com.nscorp.cost.calculator.model.SummaryData;
-import com.nscorp.cost.calculator.model.UnitTrainInputs;
-import org.apache.commons.collections4.ListUtils;
+import com.nscorp.cost.calculator.model.*;
+import com.nscorp.cost.calculator.repo.RateIndexRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 public class CostService {
     @Autowired
-    private CarService carService;
+    private PusherService pusherService;
     @Autowired
-    private JFHLService jfhlService;
+    private RateIndexRepository riRepository;
     @Autowired
-    private LocoService locoService;
+    private CoalDumpingService coalDumpingService;
     @Autowired
-    private CarMilesService cmService;
-    @Autowired
-    private TrainService trainService;
-    @Autowired
-    private GeneralAdminService gaService;
-    @Autowired
-    private SharedAssetServices saaService;
-    @Autowired
-    private GrossTonMilesService gtmService;
-    @Autowired
-    private SpecialFacilityService sfService;
-    @Autowired
-    private TerminalAndYardService tyService;
+    private SummaryDataService summaryDataService;
 
     public ResponseData computeCost(UnitTrainInputs inputs) {
+        List<PushersInfo> pusherData = pusherService.getPusherData(inputs);
+        CostSummary coalDumpingCost = coalDumpingService.getCoalDumping(inputs);
+        List<SummaryData> summaryData = summaryDataService.getSummaryDataList(inputs);
+
         return ResponseData.builder()
-                .summaryData(getSummaryDataList(inputs))
+                .coalDumping(coalDumpingCost)
+                .pusherData(pusherData)
+                .summaryData(summaryData)
+                .vec(getVECSummary(inputs, summaryData, pusherData, coalDumpingCost))
+                .vrc(getVRCSummary(inputs, summaryData, pusherData, coalDumpingCost))
                 .build();
     }
 
-    private List<SummaryData> getSummaryDataList(final UnitTrainInputs inputs) {
-        return IntStream.range(0, ListUtils.emptyIfNull(inputs.getUnitTrains()).size())
-                .mapToObj(i -> isValidDivision(inputs, i) ? getDummySummaryData() : createSummaryData(inputs, i))
-                .collect(Collectors.toList());
-    }
-
-    private SummaryData getDummySummaryData() {
-        return SummaryData.builder().build();
-    }
-
-    private boolean isValidDivision(UnitTrainInputs inputs, int i) {
-        return inputs.getUnitTrains().get(i).getDivision().equalsIgnoreCase("NONE");
-    }
-
-    private SummaryData createSummaryData(UnitTrainInputs inputs, int i) {
-        return SummaryData.builder()
-                .gaTaxes(gaService.getGATaxesCost(inputs))
-                .gaAdminCost(gaService.getGeneralAdminCost(inputs))
-                .gaMarketingCost(gaService.getGAMarketingCost(inputs))
-                .trainStartCost(trainService.getTrainStartCost(inputs, i))
-                .gaMechanicalCost(gtmService.getGAMechanicalCost(inputs, i))
-                .gaEngineeringCost(gtmService.getGAEngineeringCost(inputs, i))
-                .carHiredOrDailyCost(carService.getCarHireOrDailyRate(inputs, i))
-                .networkEconomicCost(gtmService.getNetworkEconomicCost(inputs, i))
-                .sharedAssetAreaCost(saaService.getSharedAssetAreaCost(inputs, i))
-                .gaCustomerServiceCost(gaService.getGACustomerServiceCost(inputs))
-                .gaTransportationCost(gaService.getGATransportationCost(inputs, i))
-                .locomotiveEconomicCost(locoService.getLocoEconomicsCost(inputs, i))
-                .fuelingLocomotivesCost(gtmService.getFuelingLocomotiveCost(inputs, i))
-                .carDailyReplacementCost(carService.getCarDailyReplacementRate(inputs, i))
-                .terminalYardOpsInspectionCost(tyService.getTerminalAndYardOpsCost(inputs))
-                .locoOpsAndMaintenanceCost(cmService.getLocoOpsAndMaintenanceCost(inputs, i))
-                .specializedFacilitiesServicesCost(sfService.getSharedAssetAreaCost(inputs, i))
-                .communicationAndSignalCost(cmService.getCommunicationAndSignalCost(inputs, i))
-                .bridgeAndTrackMaintenanceCost(gtmService.getBridgeAndTrackMaintenanceCost(inputs, i))
-                .jointFacilityHaulageLeaseCost(jfhlService.getJointFacilityHaulageLeaseCost(inputs, i))
+    private CostSummary getVECSummary(UnitTrainInputs inputs, List<SummaryData> summaryData, List<PushersInfo> pusherData, CostSummary coalDumpingCost) {
+        double perTrainCost = getPerTrainVECCost(inputs, summaryData, pusherData, coalDumpingCost);
+        return CostSummary.builder()
+                .perTrainCost(perTrainCost)
+                .perCarCost(perTrainCost / inputs.getNumberOfCars())
+                .perTonCost(perTrainCost / (inputs.getNumberOfCars() * inputs.getLadingWeightPerCar()))
                 .build();
+    }
+
+    private CostSummary getVRCSummary(UnitTrainInputs inputs, List<SummaryData> summaryData, List<PushersInfo> pusherData, CostSummary coalDumpingCost) {
+        double perTrainCost = getPerTrainVRCCost(inputs, summaryData, pusherData, coalDumpingCost);
+        return CostSummary.builder()
+                .perTrainCost(perTrainCost)
+                .perCarCost(perTrainCost / inputs.getNumberOfCars())
+                .perTonCost(perTrainCost / (inputs.getNumberOfCars() * inputs.getLadingWeightPerCar()))
+                .build();
+    }
+
+    private double getPerTrainVECCost(UnitTrainInputs inputs, List<SummaryData> summaryData, List<PushersInfo> pusherData, CostSummary coalDumpingCost) {
+        return (1 + getRateIndex(inputs)) * (getSummaryDataVecTotal(summaryData) + getTotalPusherCost(pusherData) + coalDumpingCost.getPerTrainCost());
+    }
+
+    private double getPerTrainVRCCost(UnitTrainInputs inputs, List<SummaryData> summaryData, List<PushersInfo> pusherData, CostSummary coalDumpingCost) {
+        return (1 + getRateIndex(inputs)) * (getSummaryDataVrcTotal(summaryData) + getTotalPusherCost(pusherData) + coalDumpingCost.getPerTrainCost());
+    }
+
+    private double getTotalPusherCost(List<PushersInfo> pusherData) {
+        return pusherData.parallelStream().mapToDouble(e -> e.getPusherCostPerTrain()).sum();
+    }
+
+    private double getSummaryDataVecTotal(List<SummaryData> summaryData) {
+        return summaryData.parallelStream().mapToDouble(e -> e.getVecTotal()).sum();
+    }
+
+    private double getSummaryDataVrcTotal(List<SummaryData> summaryData) {
+        return summaryData.parallelStream().mapToDouble(e -> e.getVrcTotal()).sum();
+    }
+
+    private double getRateIndex(UnitTrainInputs inputs) {
+        switch (inputs.getMktgMajorGroup().toUpperCase()) {
+            case "AGRICULTURE":
+                return riRepository.getOne(getYearForRateIndex()).getAgriculture();
+            case "AUTOMOTIVE":
+                return riRepository.getOne(getYearForRateIndex()).getAutomotive();
+            case "CHEMICALS":
+                return riRepository.getOne(getYearForRateIndex()).getChemical();
+            case "COAL":
+                return riRepository.getOne(getYearForRateIndex()).getCoal();
+            case "INTERMODAL":
+                return riRepository.getOne(getYearForRateIndex()).getIntermodal();
+            case "METALS":
+                return riRepository.getOne(getYearForRateIndex()).getMetals();
+            case "PAPER":
+                return riRepository.getOne(getYearForRateIndex()).getPaper();
+            default:
+                return 1;
+        }
+    }
+
+    private int getYearForRateIndex() {
+        return LocalDate.now().getYear() - 1;
     }
 }
