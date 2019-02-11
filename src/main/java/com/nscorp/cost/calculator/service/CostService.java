@@ -18,6 +18,8 @@ public class CostService {
     @Autowired
     private JFHLService jfhlService;
     @Autowired
+    private LocoService locoService;
+    @Autowired
     private CarMilesService cmService;
     @Autowired
     private TrainService trainService;
@@ -65,10 +67,11 @@ public class CostService {
                 .sharedAssetAreaCost(saaService.getSharedAssetAreaCost(inputs, i))
                 .gaCustomerServiceCost(gaService.getGACustomerServiceCost(inputs))
                 .gaTransportationCost(gaService.getGATransportationCost(inputs, i))
+                .locomotiveEconomicCost(locoService.getLocoEconomicsCost(inputs, i))
                 .fuelingLocomotivesCost(gtmService.getFuelingLocomotiveCost(inputs, i))
                 .carDailyReplacementCost(carService.getCarDailyReplacementRate(inputs, i))
-                .locoOpsAndMaintenanceCost(cmService.getLocoOpsAndMaintenanceCost(inputs, i))
                 .terminalYardOpsInspectionCost(tyService.getTerminalAndYardOpsCost(inputs))
+                .locoOpsAndMaintenanceCost(cmService.getLocoOpsAndMaintenanceCost(inputs, i))
                 .specializedFacilitiesServicesCost(sfService.getSharedAssetAreaCost(inputs, i))
                 .communicationAndSignalCost(cmService.getCommunicationAndSignalCost(inputs, i))
                 .bridgeAndTrackMaintenanceCost(gtmService.getBridgeAndTrackMaintenanceCost(inputs, i))
