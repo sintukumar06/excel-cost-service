@@ -66,7 +66,6 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     runtimeOnly 'com.h2database:h2'
     compile 'org.projectlombok:lombok'
-    compile 'com.google.code.gson:gson'
     compile 'org.apache.commons:commons-lang3:3.8.1'
     compile 'org.apache.commons:commons-collections4:4.3'
     //compile('com.microsoft.sqlserver:mssql-jdbc')

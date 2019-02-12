@@ -1,7 +1,7 @@
 package com.nscorp.cost.calculator.service;
 
+import com.nscorp.cost.calculator.model.RequestInputs;
 import com.nscorp.cost.calculator.model.SwitchEvent;
-import com.nscorp.cost.calculator.model.UnitTrainInputs;
 import com.nscorp.cost.calculator.repo.TerminalYardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,19 +11,19 @@ public class TerminalAndYardService {
     @Autowired
     private TerminalYardRepository tyRepository;
 
-    public double getTerminalAndYardOpsCost(UnitTrainInputs inputs) {
+    public double getTerminalAndYardOpsCost(RequestInputs inputs) {
         return inputs.getEmptyReturnRatio() > 0 ? 2 * getTotalCost(inputs) : getTotalCost(inputs);
     }
 
-    private double getTotalCost(UnitTrainInputs inputs) {
+    private double getTotalCost(RequestInputs inputs) {
         return getTotalMechanicalCost(inputs) + getTotalTerminalCost(inputs);
     }
 
-    private double getTotalTerminalCost(UnitTrainInputs inputs) {
+    private double getTotalTerminalCost(RequestInputs inputs) {
         return inputs.getSwitchEvents().stream().mapToDouble(e -> fetchTerminalCost(e)).sum();
     }
 
-    private double getTotalMechanicalCost(UnitTrainInputs inputs) {
+    private double getTotalMechanicalCost(RequestInputs inputs) {
         return inputs.getSwitchEvents().stream()
                 .mapToDouble(e -> inputs.getNumberOfCars() * getMechanicalPerCar(e)).sum();
     }

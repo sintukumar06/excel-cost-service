@@ -1,7 +1,7 @@
 package com.nscorp.cost.calculator.service;
 
+import com.nscorp.cost.calculator.model.RequestInputs;
 import com.nscorp.cost.calculator.model.UnitTrain;
-import com.nscorp.cost.calculator.model.UnitTrainInputs;
 import com.nscorp.cost.calculator.repo.LocoDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ public class LocoService {
     @Autowired
     private LocoDataRepository locoRepository;
 
-    public double getLocoEconomicsCost(UnitTrainInputs inputs, int index) {
+    public double getLocoEconomicsCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
         return inputs.getNumberOfLocomotives() * unitTrain.getLocomotiveDaysOnline()
                 * (1 + inputs.getEmptyReturnRatio()) * getLocoEconomicsCostPerDays();

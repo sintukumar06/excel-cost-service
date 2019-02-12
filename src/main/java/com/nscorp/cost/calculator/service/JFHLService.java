@@ -1,7 +1,7 @@
 package com.nscorp.cost.calculator.service;
 
+import com.nscorp.cost.calculator.model.RequestInputs;
 import com.nscorp.cost.calculator.model.UnitTrain;
-import com.nscorp.cost.calculator.model.UnitTrainInputs;
 import com.nscorp.cost.calculator.repo.DivisionDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,23 +13,23 @@ public class JFHLService {
     @Autowired
     private DivisionDataRepository gtmRepository;
 
-    public double getJointFacilityHaulageLeaseCost(UnitTrainInputs inputs, int index) {
+    public double getJointFacilityHaulageLeaseCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
         return unitTrain.isAvgJointFacilityOrHaulageOrLease()
                 ? fetchJointFacilityHaulageLeaseChargeFrom(inputs, unitTrain)
                 : calculateJointFacilityHaulageLeaseCharge(inputs);
     }
 
-    private float calculateJointFacilityHaulageLeaseCharge(UnitTrainInputs inputs) {
+    private float calculateJointFacilityHaulageLeaseCharge(RequestInputs inputs) {
         return inputs.getNumberOfCars() * getTasdFactorPerCar(inputs);
     }
 
-    private double fetchJointFacilityHaulageLeaseChargeFrom(UnitTrainInputs inputs, UnitTrain unitTrain) {
+    private double fetchJointFacilityHaulageLeaseChargeFrom(RequestInputs inputs, UnitTrain unitTrain) {
         return inputs.getNumberOfCars() * unitTrain.getLoadedMiles() * (1 + inputs.getEmptyReturnRatio())
                 * fetchJointFacilityHaulageLeaseCost(unitTrain.getDivision());
     }
 
-    private float getTasdFactorPerCar(UnitTrainInputs inputs) {
+    private float getTasdFactorPerCar(RequestInputs inputs) {
         return Objects.isNull(inputs.getManualInput()) ? 0 : inputs.getManualInput().getTasdPerCar();
     }
 

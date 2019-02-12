@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Builder(toBuilder = true)
-public class UnitTrainInputs {
+public class RequestInputs {
     private String mktgMajorGroup;
     private int numberOfCars;
     private float ladingWeightPerCar;

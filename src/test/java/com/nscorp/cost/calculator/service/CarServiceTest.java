@@ -2,8 +2,8 @@ package com.nscorp.cost.calculator.service;
 
 import com.nscorp.cost.calculator.ExcelCostCalculatorApplication;
 import com.nscorp.cost.calculator.model.ManualInput;
+import com.nscorp.cost.calculator.model.RequestInputs;
 import com.nscorp.cost.calculator.model.UnitTrain;
-import com.nscorp.cost.calculator.model.UnitTrainInputs;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,8 +26,8 @@ public class CarServiceTest {
         log.info("Result calculated :" + result);
     }
 
-    private UnitTrainInputs getRequestInput() {
-        return UnitTrainInputs.builder()
+    private RequestInputs getRequestInput() {
+        return RequestInputs.builder()
                 .mktgMajorGroup("COAL")
                 .numberOfCars(132)
                 .ladingWeightPerCar(89.0f)

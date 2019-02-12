@@ -1,7 +1,7 @@
 package com.nscorp.cost.calculator.service;
 
+import com.nscorp.cost.calculator.model.RequestInputs;
 import com.nscorp.cost.calculator.model.UnitTrain;
-import com.nscorp.cost.calculator.model.UnitTrainInputs;
 import com.nscorp.cost.calculator.repo.DivisionDataRepository;
 import com.nscorp.cost.calculator.repo.MktgCarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,27 +16,27 @@ public class GrossTonMilesService {
     @Autowired
     private DivisionDataRepository gtmRepository;
 
-    public double getBridgeAndTrackMaintenanceCost(UnitTrainInputs inputs, int index) {
+    public double getBridgeAndTrackMaintenanceCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
         return calculateCost(inputs, unitTrain, getBridgeAndTrackMaintenanceByGTM(unitTrain));
     }
 
-    public double getFuelingLocomotiveCost(UnitTrainInputs inputs, int index) {
+    public double getFuelingLocomotiveCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
         return calculateCost(inputs, unitTrain, getFuelingLocomotiveByGTM(unitTrain));
     }
 
-    public double getGAEngineeringCost(UnitTrainInputs inputs, int index) {
+    public double getGAEngineeringCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
         return calculateCost(inputs, unitTrain, getGaEngineeringByGTM(unitTrain));
     }
 
-    public double getGAMechanicalCost(UnitTrainInputs inputs, int index) {
+    public double getGAMechanicalCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
         return calculateCost(inputs, unitTrain, getGaMechanicalByGTM(unitTrain));
     }
 
-    public double getNetworkEconomicCost(UnitTrainInputs inputs, int index) {
+    public double getNetworkEconomicCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
         return isManualNetworkEconomicPresent(inputs)
                 ? inputs.getManualInput().getNetworkEconomicFactor() * inputs.getNumberOfCars()
@@ -63,37 +63,37 @@ public class GrossTonMilesService {
         return gtmRepository.findOne(unitTrain.getDivision()).getBridgeAndTrackMaintenanceByGTM();
     }
 
-    private double calculateCost(UnitTrainInputs inputs, UnitTrain unitTrain, double costByGTM) {
+    private double calculateCost(RequestInputs inputs, UnitTrain unitTrain, double costByGTM) {
         return unitTrain.getLoadedMiles() * costByGTM * (inputs.getNumberOfCars()
                 * (inputs.getLadingWeightPerCar() + getTare(inputs) + (getTare(inputs) * inputs.getEmptyReturnRatio()))
                 + (inputs.getNumberOfLocomotives() * getLocoWeight(inputs) * (1 + inputs.getEmptyReturnRatio())));
     }
 
-    private float getLocoWeight(UnitTrainInputs inputs) {
+    private float getLocoWeight(RequestInputs inputs) {
         return isManualLocoWeightPresent(inputs) ? inputs.getManualInput().getLocoWeight() : 0f;
     }
 
-    private boolean isManualLocoWeightPresent(UnitTrainInputs inputs) {
+    private boolean isManualLocoWeightPresent(RequestInputs inputs) {
         return !Objects.isNull(inputs.getManualInput()) && inputs.getManualInput().getLocoWeight() > 0;
     }
 
-    private boolean isManualNetworkEconomicPresent(UnitTrainInputs inputs) {
+    private boolean isManualNetworkEconomicPresent(RequestInputs inputs) {
         return !Objects.isNull(inputs.getManualInput()) && inputs.getManualInput().getNetworkEconomicFactor() > 0;
     }
 
-    private float getTare(UnitTrainInputs inputs) {
+    private float getTare(RequestInputs inputs) {
         return isManualTareWeightPresent(inputs) ? inputs.getManualInput().getTareWeightAdjust() : getTareWeight(inputs);
     }
 
-    private boolean isManualTareWeightPresent(UnitTrainInputs inputs) {
+    private boolean isManualTareWeightPresent(RequestInputs inputs) {
         return !Objects.isNull(inputs.getManualInput()) && inputs.getManualInput().getTareWeightAdjust() > 0;
     }
 
-    private float getTareWeight(UnitTrainInputs input) {
+    private float getTareWeight(RequestInputs input) {
         return carRepository.findOne(buildMktgCarKey(input)).getTare();
     }
 
-    private String buildMktgCarKey(UnitTrainInputs input) {
+    private String buildMktgCarKey(RequestInputs input) {
         return input.getMktgCarType().concat(input.getCarOwner());
     }
 }

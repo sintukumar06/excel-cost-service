@@ -19,7 +19,7 @@ public class CostService {
     @Autowired
     private SummaryDataService summaryDataService;
 
-    public ResponseData computeCost(UnitTrainInputs inputs) {
+    public ResponseData computeCost(RequestInputs inputs) {
         List<PushersInfo> pusherData = pusherService.getPusherData(inputs);
         CostSummary coalDumpingCost = coalDumpingService.getCoalDumping(inputs);
         List<SummaryData> summaryData = summaryDataService.getSummaryDataList(inputs);
@@ -33,7 +33,7 @@ public class CostService {
                 .build();
     }
 
-    private CostSummary getVECSummary(UnitTrainInputs inputs, List<SummaryData> summaryData, List<PushersInfo> pusherData, CostSummary coalDumpingCost) {
+    private CostSummary getVECSummary(RequestInputs inputs, List<SummaryData> summaryData, List<PushersInfo> pusherData, CostSummary coalDumpingCost) {
         double perTrainCost = getPerTrainVECCost(inputs, summaryData, pusherData, coalDumpingCost);
         return CostSummary.builder()
                 .perTrainCost(perTrainCost)
@@ -42,7 +42,7 @@ public class CostService {
                 .build();
     }
 
-    private CostSummary getVRCSummary(UnitTrainInputs inputs, List<SummaryData> summaryData, List<PushersInfo> pusherData, CostSummary coalDumpingCost) {
+    private CostSummary getVRCSummary(RequestInputs inputs, List<SummaryData> summaryData, List<PushersInfo> pusherData, CostSummary coalDumpingCost) {
         double perTrainCost = getPerTrainVRCCost(inputs, summaryData, pusherData, coalDumpingCost);
         return CostSummary.builder()
                 .perTrainCost(perTrainCost)
@@ -51,11 +51,11 @@ public class CostService {
                 .build();
     }
 
-    private double getPerTrainVECCost(UnitTrainInputs inputs, List<SummaryData> summaryData, List<PushersInfo> pusherData, CostSummary coalDumpingCost) {
+    private double getPerTrainVECCost(RequestInputs inputs, List<SummaryData> summaryData, List<PushersInfo> pusherData, CostSummary coalDumpingCost) {
         return (1 + getRateIndex(inputs)) * (getSummaryDataVecTotal(summaryData) + getTotalPusherCost(pusherData) + coalDumpingCost.getPerTrainCost());
     }
 
-    private double getPerTrainVRCCost(UnitTrainInputs inputs, List<SummaryData> summaryData, List<PushersInfo> pusherData, CostSummary coalDumpingCost) {
+    private double getPerTrainVRCCost(RequestInputs inputs, List<SummaryData> summaryData, List<PushersInfo> pusherData, CostSummary coalDumpingCost) {
         return (1 + getRateIndex(inputs)) * (getSummaryDataVrcTotal(summaryData) + getTotalPusherCost(pusherData) + coalDumpingCost.getPerTrainCost());
     }
 
@@ -71,7 +71,7 @@ public class CostService {
         return summaryData.parallelStream().mapToDouble(e -> e.getVrcTotal()).sum();
     }
 
-    private double getRateIndex(UnitTrainInputs inputs) {
+    private double getRateIndex(RequestInputs inputs) {
         switch (inputs.getMktgMajorGroup().toUpperCase()) {
             case "AGRICULTURE":
                 return riRepository.getOne(getYearForRateIndex()).getAgriculture();

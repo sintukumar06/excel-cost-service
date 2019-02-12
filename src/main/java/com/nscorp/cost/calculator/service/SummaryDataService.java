@@ -1,7 +1,7 @@
 package com.nscorp.cost.calculator.service;
 
+import com.nscorp.cost.calculator.model.RequestInputs;
 import com.nscorp.cost.calculator.model.SummaryData;
-import com.nscorp.cost.calculator.model.UnitTrainInputs;
 import org.apache.commons.collections4.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class SummaryDataService {
     @Autowired
     private TerminalAndYardService tyService;
 
-    protected List<SummaryData> getSummaryDataList(final UnitTrainInputs inputs) {
+    protected List<SummaryData> getSummaryDataList(final RequestInputs inputs) {
         return IntStream.range(0, ListUtils.emptyIfNull(inputs.getUnitTrains()).size())
                 .mapToObj(i -> isValidDivision(inputs, i) ? getDummySummaryData() : createSummaryData(inputs, i))
                 .collect(Collectors.toList());
@@ -45,11 +45,11 @@ public class SummaryDataService {
         return SummaryData.builder().build();
     }
 
-    private boolean isValidDivision(UnitTrainInputs inputs, int i) {
+    private boolean isValidDivision(RequestInputs inputs, int i) {
         return NONE_DIVISION.equalsIgnoreCase(inputs.getUnitTrains().get(i).getDivision());
     }
 
-    private SummaryData createSummaryData(UnitTrainInputs inputs, int i) {
+    private SummaryData createSummaryData(RequestInputs inputs, int i) {
         return SummaryData.builder()
                 .gaTaxes(gaService.getGATaxesCost(inputs))
                 .gaAdminCost(gaService.getGeneralAdminCost(inputs))

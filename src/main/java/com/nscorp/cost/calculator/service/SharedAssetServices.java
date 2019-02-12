@@ -1,8 +1,8 @@
 package com.nscorp.cost.calculator.service;
 
+import com.nscorp.cost.calculator.model.RequestInputs;
 import com.nscorp.cost.calculator.model.SwitchEvent;
 import com.nscorp.cost.calculator.model.UnitTrain;
-import com.nscorp.cost.calculator.model.UnitTrainInputs;
 import com.nscorp.cost.calculator.repo.DivisionDataRepository;
 import com.nscorp.cost.calculator.repo.TerminalYardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ public class SharedAssetServices {
     @Autowired
     private TerminalYardRepository tyRepository;
 
-    public double getSharedAssetAreaCost(UnitTrainInputs inputs, int index) {
+    public double getSharedAssetAreaCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
         double sharedAssets = inputs.getSwitchEvents().stream().mapToDouble(e -> fetchSharedAssetCost(e)).sum();
         return (inputs.getEmptyReturnRatio() > 0 ? 2 * sharedAssets : sharedAssets) + (inputs.getNumberOfCars() * (

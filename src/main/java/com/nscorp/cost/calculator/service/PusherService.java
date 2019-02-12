@@ -1,8 +1,8 @@
 package com.nscorp.cost.calculator.service;
 
 import com.nscorp.cost.calculator.model.PushersInfo;
+import com.nscorp.cost.calculator.model.RequestInputs;
 import com.nscorp.cost.calculator.model.SummaryData;
-import com.nscorp.cost.calculator.model.UnitTrainInputs;
 import com.nscorp.cost.calculator.repo.DivisionDataRepository;
 import com.nscorp.cost.calculator.repo.LocoDataRepository;
 import org.apache.commons.collections4.ListUtils;
@@ -23,13 +23,13 @@ public class PusherService {
     @Autowired
     private LocoDataRepository locoRepository;
 
-    protected List<PushersInfo> getPusherData(final UnitTrainInputs inputs) {
+    protected List<PushersInfo> getPusherData(final RequestInputs inputs) {
         return IntStream.range(0, ListUtils.emptyIfNull(inputs.getPushers()).size())
                 .mapToObj(i -> isValidDivision(inputs, i) ? getDummyPusherData() : getPusherData(inputs, i))
                 .collect(Collectors.toList());
     }
 
-    private PushersInfo getPusherData(UnitTrainInputs inputs, int i) {
+    private PushersInfo getPusherData(RequestInputs inputs, int i) {
         PushersInfo pusher = inputs.getPushers().get(i);
         double pusherCostPerTrain = createSummaryData(inputs, pusher).getPusherCost();
         return pusher.toBuilder()
@@ -42,11 +42,11 @@ public class PusherService {
         return PushersInfo.builder().build();
     }
 
-    private boolean isValidDivision(UnitTrainInputs inputs, int i) {
+    private boolean isValidDivision(RequestInputs inputs, int i) {
         return NONE_DIVISION.equalsIgnoreCase(inputs.getPushers().get(i).getDivision());
     }
 
-    private SummaryData createSummaryData(final UnitTrainInputs inputs, final PushersInfo pusher) {
+    private SummaryData createSummaryData(final RequestInputs inputs, final PushersInfo pusher) {
         return SummaryData.builder()
 //                .trainStartCost(trainService.getTrainStartCost(inputs, i))
                 .locomotiveEconomicCost(getLocoEconomicsCost(pusher))
@@ -65,7 +65,7 @@ public class PusherService {
         return pusher.getNumberOfPushers() * pusher.getPusherDaysOnline() * getLocoEconomicsCostPerDays();
     }
 
-    private double getNetworkEconomicCost(UnitTrainInputs inputs, PushersInfo pusher) {
+    private double getNetworkEconomicCost(RequestInputs inputs, PushersInfo pusher) {
         return calculateCost(inputs, pusher, getNetworkEconomicByGTM(pusher));
     }
 
@@ -73,15 +73,15 @@ public class PusherService {
         return pusher.getLoadedMiles() * getGaTransportByCW(pusher);
     }
 
-    private double getGAMechanicalCost(UnitTrainInputs inputs, PushersInfo pusher) {
+    private double getGAMechanicalCost(RequestInputs inputs, PushersInfo pusher) {
         return calculateCost(inputs, pusher, getGaMechanicalByGTM(pusher));
     }
 
-    private double getGAEngineeringCost(UnitTrainInputs inputs, PushersInfo pusher) {
+    private double getGAEngineeringCost(RequestInputs inputs, PushersInfo pusher) {
         return calculateCost(inputs, pusher, getGaEngineeringByGTM(pusher));
     }
 
-    private double getFuelingLocomotiveCost(UnitTrainInputs inputs, PushersInfo pusher) {
+    private double getFuelingLocomotiveCost(RequestInputs inputs, PushersInfo pusher) {
         return calculateCost(inputs, pusher, getFuelingLocomotiveByGTM(pusher));
     }
 
@@ -105,7 +105,7 @@ public class PusherService {
         return gtmRepository.getOne(pusher.getDivision().toUpperCase()).getNetworkEconomicByGTM();
     }
 
-    private double getLocoOpsAndMaintenanceCost(UnitTrainInputs inputs, PushersInfo pusher) {
+    private double getLocoOpsAndMaintenanceCost(RequestInputs inputs, PushersInfo pusher) {
         return calculateCost(inputs, pusher, getLocoOpsMaintenanceByGTM(pusher));
     }
 
@@ -113,11 +113,11 @@ public class PusherService {
         return gtmRepository.getOne(pusher.getDivision().toUpperCase()).getLocoOpsMaintenanceByGTM();
     }
 
-    private double getBridgeAndTrackMaintenanceCost(UnitTrainInputs inputs, PushersInfo pusher) {
+    private double getBridgeAndTrackMaintenanceCost(RequestInputs inputs, PushersInfo pusher) {
         return calculateCost(inputs, pusher, getBridgeAndTrackMaintenanceByGTM(pusher));
     }
 
-    private double calculateCost(UnitTrainInputs inputs, PushersInfo pusher, double fuelingLocomotiveByGTM) {
+    private double calculateCost(RequestInputs inputs, PushersInfo pusher, double fuelingLocomotiveByGTM) {
         return pusher.getLoadedMiles() * pusher.getNumberOfPushers()
                 * getLocoWeight(inputs) * fuelingLocomotiveByGTM;
     }
@@ -130,11 +130,11 @@ public class PusherService {
         return gtmRepository.getOne(pusher.getDivision().toUpperCase()).getCommunicationAndSignalByCM();
     }
 
-    private float getLocoWeight(UnitTrainInputs inputs) {
+    private float getLocoWeight(RequestInputs inputs) {
         return isManualLocoWeightPresent(inputs) ? inputs.getManualInput().getLocoWeight() : 0f;
     }
 
-    private boolean isManualLocoWeightPresent(UnitTrainInputs inputs) {
+    private boolean isManualLocoWeightPresent(RequestInputs inputs) {
         return !Objects.isNull(inputs.getManualInput()) && inputs.getManualInput().getLocoWeight() > 0;
     }
 
