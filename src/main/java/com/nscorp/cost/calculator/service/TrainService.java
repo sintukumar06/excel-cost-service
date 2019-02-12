@@ -6,6 +6,8 @@ import com.nscorp.cost.calculator.repo.TrainDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static java.util.Objects.isNull;
+
 @Service
 public class TrainService {
     @Autowired
@@ -22,6 +24,7 @@ public class TrainService {
     }
 
     private double getTrainStartCost(RequestInputs inputs) {
-        return tdRepository.getOne(inputs.getTrainType().toUpperCase()).getTrainStartCost();
+        return isNull(inputs.getTrainType())
+                ? 0 : tdRepository.getOne(inputs.getTrainType().toUpperCase()).getTrainStartCost();
     }
 }

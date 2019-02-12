@@ -7,7 +7,8 @@ import com.nscorp.cost.calculator.repo.TerminalYardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
+import static java.util.Objects.isNull;
+import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 
 @Service
 public class SpecialFacilityService {
@@ -25,12 +26,12 @@ public class SpecialFacilityService {
     }
 
     private double fetchDynamicSpecialFacilityChargeFrom(RequestInputs inputs) {
-        return inputs.getSwitchEvents().stream()
+        return emptyIfNull(inputs.getSwitchEvents()).stream()
                 .mapToDouble(e -> inputs.getNumberOfCars() * fetchSpecialFacilityCost(e)).sum();
     }
 
     private float getBhrrFactorPerCar(RequestInputs inputs) {
-        return Objects.isNull(inputs.getManualInput()) ? 0 : inputs.getManualInput().getBhrrFactorPerCar();
+        return isNull(inputs.getManualInput()) ? 0 : inputs.getManualInput().getBhrrFactorPerCar();
     }
 
     private double fetchSpecialFacilityCost(SwitchEvent event) {

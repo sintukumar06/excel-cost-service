@@ -1,5 +1,6 @@
 package com.nscorp.cost.calculator.service;
 
+import com.nscorp.cost.calculator.db.MktgCarType;
 import com.nscorp.cost.calculator.model.RequestInputs;
 import com.nscorp.cost.calculator.model.UnitTrain;
 import com.nscorp.cost.calculator.repo.DivisionDataRepository;
@@ -90,10 +91,11 @@ public class GrossTonMilesService {
     }
 
     private float getTareWeight(RequestInputs input) {
-        return carRepository.findOne(buildMktgCarKey(input)).getTare();
+        MktgCarType mktgCarType = carRepository.findOne(buildMktgCarKey(input));
+        return Objects.isNull(mktgCarType) ? 0f : mktgCarType.getTare();
     }
 
     private String buildMktgCarKey(RequestInputs input) {
-        return input.getMktgCarType().concat(input.getCarOwner());
+        return input.getMktgCarType() + input.getCarOwner();
     }
 }

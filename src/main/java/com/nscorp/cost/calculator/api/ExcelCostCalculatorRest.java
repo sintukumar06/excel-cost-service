@@ -20,7 +20,7 @@ public class ExcelCostCalculatorRest {
     @CrossOrigin
     @RequestMapping(value = "/calculate", method = RequestMethod.POST,
             consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseData> calculateAndSaveService(@Valid @RequestBody RequestInputs requestInputs) {
-        return new ResponseEntity<>(costService.computeCost(requestInputs), OK);
+    public ResponseEntity<ResponseData> calculateAndSaveService(@Valid @RequestBody RequestInputs request) {
+        return new ResponseEntity<>(costService.computeCost(request), OK);
     }
 }

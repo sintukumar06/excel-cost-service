@@ -6,6 +6,8 @@ import com.nscorp.cost.calculator.repo.TerminalYardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static org.apache.commons.collections4.ListUtils.emptyIfNull;
+
 @Service
 public class TerminalAndYardService {
     @Autowired
@@ -20,11 +22,11 @@ public class TerminalAndYardService {
     }
 
     private double getTotalTerminalCost(RequestInputs inputs) {
-        return inputs.getSwitchEvents().stream().mapToDouble(e -> fetchTerminalCost(e)).sum();
+        return emptyIfNull(inputs.getSwitchEvents()).stream().mapToDouble(e -> fetchTerminalCost(e)).sum();
     }
 
     private double getTotalMechanicalCost(RequestInputs inputs) {
-        return inputs.getSwitchEvents().stream()
+        return emptyIfNull(inputs.getSwitchEvents()).stream()
                 .mapToDouble(e -> inputs.getNumberOfCars() * getMechanicalPerCar(e)).sum();
     }
 

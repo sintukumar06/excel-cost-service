@@ -8,6 +8,8 @@ import com.nscorp.cost.calculator.repo.TerminalYardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static org.apache.commons.collections4.ListUtils.emptyIfNull;
+
 @Service
 public class SharedAssetServices {
     @Autowired
@@ -17,7 +19,7 @@ public class SharedAssetServices {
 
     public double getSharedAssetAreaCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
-        double sharedAssets = inputs.getSwitchEvents().stream().mapToDouble(e -> fetchSharedAssetCost(e)).sum();
+        double sharedAssets = emptyIfNull(inputs.getSwitchEvents()).stream().mapToDouble(e -> fetchSharedAssetCost(e)).sum();
         return (inputs.getEmptyReturnRatio() > 0 ? 2 * sharedAssets : sharedAssets) + (inputs.getNumberOfCars() * (
                 (unitTrain.getLoadedMiles() * getSaaPerMile(unitTrain) * (1 + inputs.getEmptyReturnRatio())) + (
                         getSaaPerOrigin(unitTrain) * (inputs.getEmptyReturnRatio() > 0 ? 1 + inputs.getEmptyReturnRatio() : 0))));

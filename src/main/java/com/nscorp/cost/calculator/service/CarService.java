@@ -1,5 +1,6 @@
 package com.nscorp.cost.calculator.service;
 
+import com.nscorp.cost.calculator.db.MktgCarType;
 import com.nscorp.cost.calculator.model.ManualInput;
 import com.nscorp.cost.calculator.model.RequestInputs;
 import com.nscorp.cost.calculator.model.UnitTrain;
@@ -33,7 +34,7 @@ public class CarService {
     }
 
     private boolean isCarReplacementRateApplicable(RequestInputs input, UnitTrain unitTrain) {
-        return !input.getCarOwner().equalsIgnoreCase("PRIVATE") && unitTrain.isCarHiredOrDailyRate();
+        return !"PRIVATE".equalsIgnoreCase(input.getCarOwner()) && unitTrain.isCarHiredOrDailyRate();
     }
 
     private float getCarMileageCost(RequestInputs input, UnitTrain unitTrain) {
@@ -45,7 +46,8 @@ public class CarService {
     }
 
     private float getDailyReplacementRate(RequestInputs input) {
-        return carRepository.findOne(buildMktgCarKey(input)).getDailyReplacement();
+        MktgCarType mktgCarType = carRepository.findOne(buildMktgCarKey(input));
+        return Objects.isNull(mktgCarType) ? 0f : mktgCarType.getDailyReplacement();
     }
 
     private float getCarDailyEquipmentCost(RequestInputs input, UnitTrain unitTrain) {
@@ -53,15 +55,17 @@ public class CarService {
     }
 
     private float getMileageRate(RequestInputs input) {
-        return carRepository.findOne(buildMktgCarKey(input)).getMileageRate();
+        MktgCarType mktgCarType = carRepository.findOne(buildMktgCarKey(input));
+        return Objects.isNull(mktgCarType) ? 0f : mktgCarType.getMileageRate();
     }
 
     private float getDailyEquipmentCost(RequestInputs input) {
-        return carRepository.findOne(buildMktgCarKey(input)).getDailyEquipmentCost();
+        MktgCarType mktgCarType = carRepository.findOne(buildMktgCarKey(input));
+        return Objects.isNull(mktgCarType) ? 0f : mktgCarType.getDailyEquipmentCost();
     }
 
     private String buildMktgCarKey(RequestInputs input) {
-        return input.getMktgCarType().concat(input.getCarOwner());
+        return input.getMktgCarType() + input.getCarOwner();
     }
 
     private boolean isManualCarHireRatePresent(ManualInput input) {

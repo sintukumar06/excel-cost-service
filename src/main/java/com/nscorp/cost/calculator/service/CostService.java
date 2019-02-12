@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 
+import static java.util.Objects.isNull;
+
 @Service
 public class CostService {
     @Autowired
@@ -52,11 +54,13 @@ public class CostService {
     }
 
     private double getPerTrainVECCost(RequestInputs inputs, List<SummaryData> summaryData, List<PushersInfo> pusherData, CostSummary coalDumpingCost) {
-        return (1 + getRateIndex(inputs)) * (getSummaryDataVecTotal(summaryData) + getTotalPusherCost(pusherData) + coalDumpingCost.getPerTrainCost());
+        return (1 + getRateIndex(inputs)) * (getSummaryDataVecTotal(summaryData)
+                + getTotalPusherCost(pusherData) + (isNull(coalDumpingCost) ? 0 : coalDumpingCost.getPerTrainCost()));
     }
 
     private double getPerTrainVRCCost(RequestInputs inputs, List<SummaryData> summaryData, List<PushersInfo> pusherData, CostSummary coalDumpingCost) {
-        return (1 + getRateIndex(inputs)) * (getSummaryDataVrcTotal(summaryData) + getTotalPusherCost(pusherData) + coalDumpingCost.getPerTrainCost());
+        return (1 + getRateIndex(inputs)) * (getSummaryDataVrcTotal(summaryData)
+                + getTotalPusherCost(pusherData) + (isNull(coalDumpingCost) ? 0 : coalDumpingCost.getPerTrainCost()));
     }
 
     private double getTotalPusherCost(List<PushersInfo> pusherData) {
