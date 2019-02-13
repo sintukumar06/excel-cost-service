@@ -1,6 +1,7 @@
 package com.nscorp.cost.calculator.service;
 
-import com.nscorp.cost.calculator.repo.MktgCarRepository;
+import com.nscorp.cost.calculator.model.CostSummary;
+import com.nscorp.cost.calculator.repo.DumpingChargeRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,20 +18,22 @@ import static org.junit.Assert.assertThat;
 @DataJpaTest
 @RunWith(SpringRunner.class)
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-public class CarServiceTest extends AbstractBaseTest {
+public class CoalDumpingServiceTest extends AbstractBaseTest {
     @InjectMocks
-    private CarService testObj;
+    private CoalDumpingService testObj;
     @Autowired
-    private MktgCarRepository carRepository;
+    private DumpingChargeRepository dcRepository;
 
     @Before
-    public void setup() {
-        testObj.setCarRepository(carRepository);
+    public void setUp() throws Exception {
+        testObj.setDcRepository(dcRepository);
     }
 
     @Test
     public void calculateCarHireDailyRateWhenManualInputIsGiven() {
-        float result = testObj.getCarHireOrDailyRate(getRequestInput(), 0);
-        assertThat(result, equalTo(368280.0f));
+        CostSummary result = testObj.getCoalDumping(getRequestInput());
+        assertThat(result.getPerTonCost(), equalTo(-2.27841367));
+        assertThat(result.getPerCarCost(), equalTo(-202.77881663));
+        assertThat(result.getPerTrainCost(), equalTo(-26766.803795159998));
     }
 }

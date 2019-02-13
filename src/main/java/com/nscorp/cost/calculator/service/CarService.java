@@ -12,8 +12,12 @@ import java.util.Objects;
 
 @Service
 public class CarService {
-    @Autowired
     private MktgCarRepository carRepository;
+
+    @Autowired
+    public void setCarRepository(MktgCarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
 
     public float getCarHireOrDailyRate(RequestInputs input, int index) {
         UnitTrain unitTrain = input.getUnitTrains().get(index);

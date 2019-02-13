@@ -94,11 +94,11 @@ public class PusherService {
     }
 
     private double getGaTransportByCW(PushersInfo pusher) {
-        return gtmRepository.getOne(pusher.getDivision().toUpperCase()).getGATransportbyCW();
+        return gtmRepository.getOne(pusher.getDivision().toUpperCase()).getGaTransportByCW();
     }
 
     private double getGaMechanicalByGTM(PushersInfo pusher) {
-        return gtmRepository.getOne(pusher.getDivision().toUpperCase()).getGAMechanicalByGTM();
+        return gtmRepository.getOne(pusher.getDivision().toUpperCase()).getGaMechanicalByGTM();
     }
 
     private double getNetworkEconomicByGTM(PushersInfo pusher) {
@@ -139,7 +139,7 @@ public class PusherService {
     }
 
     private double getGaEngineeringByGTM(PushersInfo pusher) {
-        return gtmRepository.getOne(pusher.getDivision().toUpperCase()).getGAEngineeringByGTM();
+        return gtmRepository.getOne(pusher.getDivision().toUpperCase()).getGaEngineeringByGTM();
     }
 
     private double getFuelingLocomotiveByGTM(PushersInfo pusher) {

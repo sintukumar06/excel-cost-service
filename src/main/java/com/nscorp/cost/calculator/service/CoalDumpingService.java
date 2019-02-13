@@ -10,8 +10,12 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
 public class CoalDumpingService {
-    @Autowired
     private DumpingChargeRepository dcRepository;
+
+    @Autowired
+    public void setDcRepository(DumpingChargeRepository dcRepository) {
+        this.dcRepository = dcRepository;
+    }
 
     protected CostSummary getCoalDumping(RequestInputs inputs) {
         return isBlank(inputs.getCoalDumpingCity()) ? null

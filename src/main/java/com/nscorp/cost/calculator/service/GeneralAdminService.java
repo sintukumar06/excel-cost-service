@@ -32,7 +32,7 @@ public class GeneralAdminService {
     }
 
     private double getGaTransportbyCW(UnitTrain unitTrain) {
-        return gtmRepository.getOne(unitTrain.getDivision()).getGATransportbyCW();
+        return gtmRepository.getOne(unitTrain.getDivision()).getGaTransportByCW();
     }
 
     public double getGATaxesCost(RequestInputs inputs) {
@@ -40,11 +40,11 @@ public class GeneralAdminService {
     }
 
     private double getGaMarketingByCarload(RequestInputs inputs) {
-        return gaRepository.getOne(inputs.getMktgMajorGroup()).getGAMarketingByCarload();
+        return gaRepository.getOne(inputs.getMktgMajorGroup()).getGaMarketingByCarload();
     }
 
     private double getGaTaxesByCarload(RequestInputs inputs) {
-        return gaRepository.getOne(inputs.getMktgMajorGroup()).getGATaxesByCarload();
+        return gaRepository.getOne(inputs.getMktgMajorGroup()).getGaTaxesByCarload();
     }
 
     private double getAdminCostByCarload(RequestInputs inputs) {
@@ -52,7 +52,7 @@ public class GeneralAdminService {
     }
 
     private double getGaCustomerServiceByCarload(RequestInputs inputs) {
-        return gaRepository.getOne(inputs.getMktgMajorGroup()).getGACustomerServiceByCarload();
+        return gaRepository.getOne(inputs.getMktgMajorGroup()).getGaCustomerServiceByCarload();
     }
 
     private double calculateCost(RequestInputs inputs, double rate) {

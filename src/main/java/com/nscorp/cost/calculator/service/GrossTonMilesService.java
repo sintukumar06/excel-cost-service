@@ -49,11 +49,11 @@ public class GrossTonMilesService {
     }
 
     private double getGaMechanicalByGTM(UnitTrain unitTrain) {
-        return gtmRepository.findOne(unitTrain.getDivision()).getGAMechanicalByGTM();
+        return gtmRepository.findOne(unitTrain.getDivision()).getGaMechanicalByGTM();
     }
 
     private double getGaEngineeringByGTM(UnitTrain unitTrain) {
-        return gtmRepository.findOne(unitTrain.getDivision()).getGAEngineeringByGTM();
+        return gtmRepository.findOne(unitTrain.getDivision()).getGaEngineeringByGTM();
     }
 
     private double getFuelingLocomotiveByGTM(UnitTrain unitTrain) {
