@@ -8,8 +8,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CarMilesService {
-    @Autowired
     private DivisionDataRepository gtmRepository;
+
+    @Autowired
+    public void setGtmRepository(DivisionDataRepository gtmRepository) {
+        this.gtmRepository = gtmRepository;
+    }
 
     public double getCommunicationAndSignalCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);

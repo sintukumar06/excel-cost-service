@@ -1,5 +1,7 @@
 package com.nscorp.cost.calculator.db;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -34,6 +36,7 @@ public class DivisionData {
     private double cmLocoOperationMaint;
     @Column(name = "CM_JFHL_LINES")
     private double cmJFHLLines;
+    @ColumnDefault("0")
     @Column(name = "CM_SHARED_ASSET_AREA")
     private double cmSharedAssetAreaOnLink;
     @Column(name = "GTM_NETWORK_ECONOMIC")
@@ -42,8 +45,10 @@ public class DivisionData {
     private double crewWagesTotal;
     @Column(name = "GA_TRANSPORTATION")
     private double gaTransportation;
+    @ColumnDefault("0")
     @Column(name = "ORIG_SHARED_ASSET_AREA")
     private double sharedAssetAreaCostOnNodes;
+    @ColumnDefault("0")
     @Column(name = "TOTAL_CARLOAD_ORIGINATION")
     private double totalCarloadOrigs;
     @Column(name = "GA_TRANSPORTATION_BY_CW")

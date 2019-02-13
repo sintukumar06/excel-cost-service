@@ -12,10 +12,18 @@ import java.util.Objects;
 
 @Service
 public class GrossTonMilesService {
-    @Autowired
     private MktgCarRepository carRepository;
-    @Autowired
     private DivisionDataRepository gtmRepository;
+
+    @Autowired
+    public void setCarRepository(MktgCarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
+
+    @Autowired
+    public void setGtmRepository(DivisionDataRepository gtmRepository) {
+        this.gtmRepository = gtmRepository;
+    }
 
     public double getBridgeAndTrackMaintenanceCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);

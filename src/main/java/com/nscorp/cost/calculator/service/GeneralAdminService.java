@@ -9,10 +9,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GeneralAdminService {
-    @Autowired
     private GeneralAdminRepository gaRepository;
-    @Autowired
     private DivisionDataRepository gtmRepository;
+
+    @Autowired
+    public void setGaRepository(GeneralAdminRepository gaRepository) {
+        this.gaRepository = gaRepository;
+    }
+
+    @Autowired
+    public void setGtmRepository(DivisionDataRepository gtmRepository) {
+        this.gtmRepository = gtmRepository;
+    }
 
     public double getGeneralAdminCost(RequestInputs inputs) {
         return calculateCost(inputs, getAdminCostByCarload(inputs));
