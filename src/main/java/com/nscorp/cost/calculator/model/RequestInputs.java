@@ -1,8 +1,10 @@
 package com.nscorp.cost.calculator.model;
 
 import com.nscorp.cost.calculator.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;
@@ -12,6 +14,8 @@ import java.util.List;
 
 @Data
 @Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class RequestInputs {
     @MajorGroupType
     private String mktgMajorGroup;

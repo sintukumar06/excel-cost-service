@@ -70,8 +70,8 @@ dependencies {
     compile 'org.apache.commons:commons-collections4:4.3'
     //compile('com.microsoft.sqlserver:mssql-jdbc')
     compile('org.mockito:mockito-core:2.23.0')
-    //providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
-    //providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+    providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
