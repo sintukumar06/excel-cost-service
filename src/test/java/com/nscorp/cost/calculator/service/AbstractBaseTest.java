@@ -2,6 +2,7 @@ package com.nscorp.cost.calculator.service;
 
 import com.nscorp.cost.calculator.model.ManualInput;
 import com.nscorp.cost.calculator.model.RequestInputs;
+import com.nscorp.cost.calculator.model.SwitchEvent;
 import com.nscorp.cost.calculator.model.UnitTrain;
 
 import java.util.Arrays;
@@ -18,6 +19,9 @@ public abstract class AbstractBaseTest {
                 .emptyReturnRatio(1.0f)
                 .trainType("UNIT BULK")
                 .coalDumpingCity("Lamberts Point")
+                .switchEvents(Arrays.asList(
+                        SwitchEvent.builder().switchType("INTERCHANGE").cityAndState("AYER, MA").build(),
+                        SwitchEvent.builder().switchType("INTERCHANGE").cityAndState("MOBILE, AL").build()))
                 .manualInput(ManualInput.builder()
                         .carHireDailyRate(12.0f)
                         .carHirePerMile(5.0f)
@@ -29,7 +33,7 @@ public abstract class AbstractBaseTest {
                         .carDaysOnline(2.50f)
                         .numberOfTrainStarts(3)
                         .carHiredOrDailyRate(true)
-                        .avgJointFacilityOrHaulageOrLease(false)
+                        .avgJointFacilityOrHaulageOrLease(true)
                         .specializedFacilitySvcs(false)
                         .build()))
                 .build();

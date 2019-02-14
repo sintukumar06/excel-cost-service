@@ -10,8 +10,12 @@ import java.util.Objects;
 
 @Service
 public class JFHLService {
-    @Autowired
     private DivisionDataRepository gtmRepository;
+
+    @Autowired
+    public void setGtmRepository(DivisionDataRepository gtmRepository) {
+        this.gtmRepository = gtmRepository;
+    }
 
     public double getJointFacilityHaulageLeaseCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
