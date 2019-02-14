@@ -17,11 +17,12 @@ public abstract class AbstractBaseTest {
                 .trainType("UNIT BULK")
                 .coalDumpingCity("Lamberts Point")
                 .switchEvents(Arrays.asList(
-                        SwitchEvent.builder().switchType("INTERCHANGE").cityAndState("AYER, MA").build(),
+                        SwitchEvent.builder().switchType("INTERCHANGE").cityAndState("BELLMAWR, NJ").build(),
                         SwitchEvent.builder().switchType("INTERCHANGE").cityAndState("MOBILE, AL").build()))
                 .manualInput(ManualInput.builder()
                         .carHireDailyRate(12.0f)
                         .carHirePerMile(5.0f)
+                        .bhrrFactorPerCar(850)
                         .build())
                 .pushers(Arrays.asList(PushersInfo.builder().division("S JERSEY CSAO").loadedMiles(27)
                         .pusherDaysOnline(2).numberOfPushers(4).numberOfPusherStarts(3).build()))

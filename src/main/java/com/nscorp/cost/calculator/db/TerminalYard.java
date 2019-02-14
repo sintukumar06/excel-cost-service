@@ -1,5 +1,7 @@
 package com.nscorp.cost.calculator.db;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,22 +17,31 @@ public class TerminalYard {
     private String terminal;
     @Column(name = "OP_STATION")
     private String opStation;
+    @ColumnDefault("0")
     @Column(name = "CLASS_COSTS")
     private double classCost;
+    @ColumnDefault("0")
     @Column(name = "INTERCHANGE_COSTS")
     private double interchangeCost;
+    @ColumnDefault("0")
     @Column(name = "TERMINAL_COSTS")
     private double terminalCost;
+    @ColumnDefault("0")
     @Column(name = "SHARED_ASSET_CLASS_COSTS")
     private double saaClassCost;
+    @ColumnDefault("0")
     @Column(name = "SHARED_ASSET_INTERCHANGE_COSTS")
     private double saaInterchangeCost;
+    @ColumnDefault("0")
     @Column(name = "SHARED_ASSET_TERMINAL_COSTS")
     private double saaTerminalCost;
+    @ColumnDefault("0")
     @Column(name = "MECHANICAL_PER_CAR")
     private double mechanicalPerCar;
+    @ColumnDefault("0")
     @Column(name = "CARLOAD_ORIGS_ONNET")
     private double carloadOrigsOnnet;
+    @ColumnDefault("0")
     @Column(name = "SPEC_FACILITY_PER_CARLOAD_ORIG")
     private double specFacilityPerCarloadOrig;
 

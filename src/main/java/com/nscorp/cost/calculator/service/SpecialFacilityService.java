@@ -11,10 +11,14 @@ import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 
 @Service
 public class SpecialFacilityService {
-    @Autowired
     private TerminalYardRepository tyRepository;
 
-    public double getSharedAssetAreaCost(RequestInputs inputs, int index) {
+    @Autowired
+    public void setTyRepository(TerminalYardRepository tyRepository) {
+        this.tyRepository = tyRepository;
+    }
+
+    public double getSpecializedFacilitiesServicesCost(RequestInputs inputs, int index) {
         return index == 0 ? computeSAACostForFirstTrain(inputs) : computeSAACostForOtherTrain(inputs);
     }
 

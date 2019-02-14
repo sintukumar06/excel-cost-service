@@ -22,6 +22,7 @@ apply plugin: 'eclipse-wtp'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
+apply plugin: 'jacoco'
 //for cargo
 apply plugin: 'com.bmuschko.cargo'
 
@@ -79,6 +80,33 @@ dependencies {
             "org.codehaus.cargo:cargo-ant:1.5.0",
             "org.wildfly.core:wildfly-controller-client:3.0.10.Final"
 }
+jacocoTestCoverageVerification {
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    'com/nscorp/cost/calculator/db/*',
+                    'com/nscorp/cost/calculator/model/*'
+            ])
+        })
+    }
+
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.20
+            }
+        }
+    }
+}
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+        csv.enabled false
+        html.destination "${buildDir}/reports/coverage"
+    }
+}
+check.dependsOn jacocoTestReport
 
 cargo {
     containerId = 'wildfly10x'

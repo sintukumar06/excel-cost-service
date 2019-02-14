@@ -1,6 +1,5 @@
 package com.nscorp.cost.calculator.service;
 
-import com.nscorp.cost.calculator.repo.DivisionDataRepository;
 import com.nscorp.cost.calculator.repo.TerminalYardRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,26 +14,24 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
+
 @DataJpaTest
 @RunWith(SpringRunner.class)
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-public class SharedAssetServicesTest extends AbstractBaseTest {
+public class SpecialFacilityServiceTest extends AbstractBaseTest {
     @InjectMocks
-    private SharedAssetServices testObj;
+    private SpecialFacilityService testObj;
     @Autowired
     private TerminalYardRepository tyRepository;
-    @Autowired
-    private DivisionDataRepository gtmRepository;
 
     @Before
     public void setUp() throws Exception {
-        testObj.setGtmRepository(gtmRepository);
         testObj.setTyRepository(tyRepository);
     }
 
     @Test
-    public void getSharedAssetAreaCost() {
-        double result = testObj.getSharedAssetAreaCost(getRequestInput(), 0);
-        assertThat(result, equalTo(107.50723064));
+    public void getSpecializedFacilitiesServicesCost() {
+        double result = testObj.getSpecializedFacilitiesServicesCost(getRequestInput(), 0);
+        assertThat(result, equalTo(112200.0));
     }
 }

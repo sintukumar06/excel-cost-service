@@ -67,10 +67,10 @@ public class SummaryDataService {
                 .carDailyReplacementCost(carService.getCarDailyReplacementRate(inputs, i))
                 .locoOpsAndMaintenanceCost(cmService.getLocoOpsAndMaintenanceCost(inputs, i))
                 .terminalYardOpsInspectionCost(tyService.getTerminalAndYardOpsCost(inputs, i))
-                .specializedFacilitiesServicesCost(sfService.getSharedAssetAreaCost(inputs, i))
                 .communicationAndSignalCost(cmService.getCommunicationAndSignalCost(inputs, i))
                 .bridgeAndTrackMaintenanceCost(gtmService.getBridgeAndTrackMaintenanceCost(inputs, i))
                 .jointFacilityHaulageLeaseCost(jfhlService.getJointFacilityHaulageLeaseCost(inputs, i))
+                .specializedFacilitiesServicesCost(sfService.getSpecializedFacilitiesServicesCost(inputs, i))
                 .build();
     }
 }

@@ -10,8 +10,12 @@ import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 
 @Service
 public class TerminalAndYardService {
-    @Autowired
     private TerminalYardRepository tyRepository;
+
+    @Autowired
+    public void setTyRepository(TerminalYardRepository tyRepository) {
+        this.tyRepository = tyRepository;
+    }
 
     public double getTerminalAndYardOpsCost(RequestInputs inputs, int index) {
         return index == 0 ? inputs.getEmptyReturnRatio() > 0 ? 2 * getTotalCost(inputs) : getTotalCost(inputs) : 0;

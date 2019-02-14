@@ -10,8 +10,12 @@ import static java.util.Objects.isNull;
 
 @Service
 public class TrainService {
-    @Autowired
     private TrainDataRepository tdRepository;
+
+    @Autowired
+    public void setTdRepository(TrainDataRepository tdRepository) {
+        this.tdRepository = tdRepository;
+    }
 
     public double getTrainStartCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
