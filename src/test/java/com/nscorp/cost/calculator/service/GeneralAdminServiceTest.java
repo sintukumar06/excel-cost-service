@@ -34,19 +34,19 @@ public class GeneralAdminServiceTest extends AbstractBaseTest {
 
     @Test
     public void getGeneralAdminCost() {
-        double result = testObj.getGeneralAdminCost(getRequestInput());
+        double result = testObj.getGeneralAdminCost(getRequestInput(), 0);
         assertThat(result, equalTo(2133.12));
     }
 
     @Test
     public void getGACustomerServiceCost() {
-        double result = testObj.getGACustomerServiceCost(getRequestInput());
+        double result = testObj.getGACustomerServiceCost(getRequestInput(), 0);
         assertThat(result, equalTo(0.0));
     }
 
     @Test
     public void getGAMarketingCost() {
-        double result = testObj.getGAMarketingCost(getRequestInput());
+        double result = testObj.getGAMarketingCost(getRequestInput(), 0);
         assertThat(result, equalTo(142.56));
     }
 
@@ -58,7 +58,7 @@ public class GeneralAdminServiceTest extends AbstractBaseTest {
 
     @Test
     public void getGATaxesCost() {
-        double result = testObj.getGATaxesCost(getRequestInput());
+        double result = testObj.getGATaxesCost(getRequestInput(), 0);
         assertThat(result, equalTo(402.59999999999997));
     }
 }

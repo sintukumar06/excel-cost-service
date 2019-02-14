@@ -52,6 +52,13 @@
       "locomotiveDaysOnline": 0,
       "carDaysOnline": 0,
       "numberOfTrainStarts": 0
+    },
+    {
+      "division": "ALABAMA",
+      "loadedMiles": 200,
+      "locomotiveDaysOnline": 0,
+      "carDaysOnline": 0,
+      "numberOfTrainStarts": 0
     }
   ]
 }

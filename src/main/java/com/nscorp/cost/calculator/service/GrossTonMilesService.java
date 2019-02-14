@@ -47,8 +47,8 @@ public class GrossTonMilesService {
 
     public double getNetworkEconomicCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
-        return isManualNetworkEconomicPresent(inputs)
-                ? inputs.getManualInput().getNetworkEconomicFactor() * inputs.getNumberOfCars()
+        return isManualNetworkEconomicPresent(unitTrain)
+                ? unitTrain.getNetworkEconomicFactor() * inputs.getNumberOfCars()
                 : calculateCost(inputs, unitTrain, getNetworkEconomicByGTM(unitTrain));
     }
 
@@ -86,8 +86,8 @@ public class GrossTonMilesService {
         return !Objects.isNull(inputs.getManualInput()) && inputs.getManualInput().getLocoWeight() > 0;
     }
 
-    private boolean isManualNetworkEconomicPresent(RequestInputs inputs) {
-        return !Objects.isNull(inputs.getManualInput()) && inputs.getManualInput().getNetworkEconomicFactor() > 0;
+    private boolean isManualNetworkEconomicPresent(UnitTrain unitTrain) {
+        return unitTrain.getNetworkEconomicFactor() > 0;
     }
 
     private float getTare(RequestInputs inputs) {

@@ -9,20 +9,16 @@ public class UnitTrain {
     private float locomotiveDaysOnline;
     private float carDaysOnline;
     private int numberOfTrainStarts;
-    private boolean carHiredOrDailyRate;
-    private boolean avgJointFacilityOrHaulageOrLease;
-    private boolean specializedFacilitySvcs;
+    private float networkEconomicFactor;
 
-    @java.beans.ConstructorProperties({"division", "loadedMiles", "locomotiveDaysOnline", "carDaysOnline", "numberOfTrainStarts", "carHiredOrDailyRate", "avgJointFacilityOrHaulageOrLease", "specializedFacilitySvcs"})
-    public UnitTrain(String division, float loadedMiles, float locomotiveDaysOnline, float carDaysOnline, int numberOfTrainStarts, boolean carHiredOrDailyRate, boolean avgJointFacilityOrHaulageOrLease, boolean specializedFacilitySvcs) {
+    @java.beans.ConstructorProperties({"division", "loadedMiles", "locomotiveDaysOnline", "carDaysOnline", "numberOfTrainStarts", "networkEconomicFactor"})
+    public UnitTrain(String division, float loadedMiles, float locomotiveDaysOnline, float carDaysOnline, int numberOfTrainStarts, float networkEconomicFactor) {
         this.division = division;
         this.loadedMiles = loadedMiles;
         this.locomotiveDaysOnline = locomotiveDaysOnline;
         this.carDaysOnline = carDaysOnline;
         this.numberOfTrainStarts = numberOfTrainStarts;
-        this.carHiredOrDailyRate = carHiredOrDailyRate;
-        this.avgJointFacilityOrHaulageOrLease = avgJointFacilityOrHaulageOrLease;
-        this.specializedFacilitySvcs = specializedFacilitySvcs;
+        this.networkEconomicFactor = networkEconomicFactor;
     }
 
     public UnitTrain() {
@@ -36,64 +32,48 @@ public class UnitTrain {
         return this.division;
     }
 
-    public void setDivision(String division) {
-        this.division = division;
-    }
-
     public float getLoadedMiles() {
         return this.loadedMiles;
-    }
-
-    public void setLoadedMiles(float loadedMiles) {
-        this.loadedMiles = loadedMiles;
     }
 
     public float getLocomotiveDaysOnline() {
         return this.locomotiveDaysOnline;
     }
 
-    public void setLocomotiveDaysOnline(float locomotiveDaysOnline) {
-        this.locomotiveDaysOnline = locomotiveDaysOnline;
-    }
-
     public float getCarDaysOnline() {
         return this.carDaysOnline;
-    }
-
-    public void setCarDaysOnline(float carDaysOnline) {
-        this.carDaysOnline = carDaysOnline;
     }
 
     public int getNumberOfTrainStarts() {
         return this.numberOfTrainStarts;
     }
 
+    public void setDivision(String division) {
+        this.division = division;
+    }
+
+    public void setLoadedMiles(float loadedMiles) {
+        this.loadedMiles = loadedMiles;
+    }
+
+    public void setLocomotiveDaysOnline(float locomotiveDaysOnline) {
+        this.locomotiveDaysOnline = locomotiveDaysOnline;
+    }
+
+    public void setCarDaysOnline(float carDaysOnline) {
+        this.carDaysOnline = carDaysOnline;
+    }
+
     public void setNumberOfTrainStarts(int numberOfTrainStarts) {
         this.numberOfTrainStarts = numberOfTrainStarts;
     }
 
-    public boolean isCarHiredOrDailyRate() {
-        return this.carHiredOrDailyRate;
+    public float getNetworkEconomicFactor() {
+        return this.networkEconomicFactor;
     }
 
-    public void setCarHiredOrDailyRate(boolean carHiredOrDailyRate) {
-        this.carHiredOrDailyRate = carHiredOrDailyRate;
-    }
-
-    public boolean isAvgJointFacilityOrHaulageOrLease() {
-        return this.avgJointFacilityOrHaulageOrLease;
-    }
-
-    public void setAvgJointFacilityOrHaulageOrLease(boolean avgJointFacilityOrHaulageOrLease) {
-        this.avgJointFacilityOrHaulageOrLease = avgJointFacilityOrHaulageOrLease;
-    }
-
-    public boolean isSpecializedFacilitySvcs() {
-        return this.specializedFacilitySvcs;
-    }
-
-    public void setSpecializedFacilitySvcs(boolean specializedFacilitySvcs) {
-        this.specializedFacilitySvcs = specializedFacilitySvcs;
+    public void setNetworkEconomicFactor(float networkEconomicFactor) {
+        this.networkEconomicFactor = networkEconomicFactor;
     }
 
     public boolean equals(final Object o) {
@@ -101,16 +81,13 @@ public class UnitTrain {
         if (!(o instanceof UnitTrain)) return false;
         final UnitTrain other = (UnitTrain) o;
         if (!other.canEqual((Object) this)) return false;
-        final Object this$division = this.getDivision();
-        final Object other$division = other.getDivision();
+        final Object this$division = this.division;
+        final Object other$division = other.division;
         if (this$division == null ? other$division != null : !this$division.equals(other$division)) return false;
-        if (Float.compare(this.getLoadedMiles(), other.getLoadedMiles()) != 0) return false;
-        if (Float.compare(this.getLocomotiveDaysOnline(), other.getLocomotiveDaysOnline()) != 0) return false;
-        if (Float.compare(this.getCarDaysOnline(), other.getCarDaysOnline()) != 0) return false;
-        if (this.getNumberOfTrainStarts() != other.getNumberOfTrainStarts()) return false;
-        if (this.isCarHiredOrDailyRate() != other.isCarHiredOrDailyRate()) return false;
-        if (this.isAvgJointFacilityOrHaulageOrLease() != other.isAvgJointFacilityOrHaulageOrLease()) return false;
-        if (this.isSpecializedFacilitySvcs() != other.isSpecializedFacilitySvcs()) return false;
+        if (Float.compare(this.loadedMiles, other.loadedMiles) != 0) return false;
+        if (Float.compare(this.locomotiveDaysOnline, other.locomotiveDaysOnline) != 0) return false;
+        if (Float.compare(this.carDaysOnline, other.carDaysOnline) != 0) return false;
+        if (this.numberOfTrainStarts != other.numberOfTrainStarts) return false;
         return true;
     }
 
@@ -121,20 +98,13 @@ public class UnitTrain {
     public int hashCode() {
         final int PRIME = 59;
         int result = 1;
-        final Object $division = this.getDivision();
+        final Object $division = this.division;
         result = result * PRIME + ($division == null ? 43 : $division.hashCode());
-        result = result * PRIME + Float.floatToIntBits(this.getLoadedMiles());
-        result = result * PRIME + Float.floatToIntBits(this.getLocomotiveDaysOnline());
-        result = result * PRIME + Float.floatToIntBits(this.getCarDaysOnline());
-        result = result * PRIME + this.getNumberOfTrainStarts();
-        result = result * PRIME + (this.isCarHiredOrDailyRate() ? 79 : 97);
-        result = result * PRIME + (this.isAvgJointFacilityOrHaulageOrLease() ? 79 : 97);
-        result = result * PRIME + (this.isSpecializedFacilitySvcs() ? 79 : 97);
+        result = result * PRIME + Float.floatToIntBits(this.loadedMiles);
+        result = result * PRIME + Float.floatToIntBits(this.locomotiveDaysOnline);
+        result = result * PRIME + Float.floatToIntBits(this.carDaysOnline);
+        result = result * PRIME + this.numberOfTrainStarts;
         return result;
-    }
-
-    public String toString() {
-        return "UnitTrain(division=" + this.getDivision() + ", loadedMiles=" + this.getLoadedMiles() + ", locomotiveDaysOnline=" + this.getLocomotiveDaysOnline() + ", carDaysOnline=" + this.getCarDaysOnline() + ", numberOfTrainStarts=" + this.getNumberOfTrainStarts() + ", carHiredOrDailyRate=" + this.isCarHiredOrDailyRate() + ", avgJointFacilityOrHaulageOrLease=" + this.isAvgJointFacilityOrHaulageOrLease() + ", specializedFacilitySvcs=" + this.isSpecializedFacilitySvcs() + ")";
     }
 
     public static class UnitTrainBuilder {
@@ -143,9 +113,7 @@ public class UnitTrain {
         private float locomotiveDaysOnline;
         private float carDaysOnline;
         private int numberOfTrainStarts;
-        private boolean carHiredOrDailyRate;
-        private boolean avgJointFacilityOrHaulageOrLease;
-        private boolean specializedFacilitySvcs;
+        private float networkEconomicFactor;
 
         UnitTrainBuilder() {
         }
@@ -175,27 +143,18 @@ public class UnitTrain {
             return this;
         }
 
-        public UnitTrain.UnitTrainBuilder carHiredOrDailyRate(boolean carHiredOrDailyRate) {
-            this.carHiredOrDailyRate = carHiredOrDailyRate;
-            return this;
-        }
-
-        public UnitTrain.UnitTrainBuilder avgJointFacilityOrHaulageOrLease(boolean avgJointFacilityOrHaulageOrLease) {
-            this.avgJointFacilityOrHaulageOrLease = avgJointFacilityOrHaulageOrLease;
-            return this;
-        }
-
-        public UnitTrain.UnitTrainBuilder specializedFacilitySvcs(boolean specializedFacilitySvcs) {
-            this.specializedFacilitySvcs = specializedFacilitySvcs;
+        public UnitTrain.UnitTrainBuilder networkEconomicFactor(float networkEconomicFactor) {
+            this.networkEconomicFactor = networkEconomicFactor;
             return this;
         }
 
         public UnitTrain build() {
-            return new UnitTrain(division, loadedMiles, locomotiveDaysOnline, carDaysOnline, numberOfTrainStarts, carHiredOrDailyRate, avgJointFacilityOrHaulageOrLease, specializedFacilitySvcs);
+            return new UnitTrain(division, loadedMiles, locomotiveDaysOnline, carDaysOnline, numberOfTrainStarts, networkEconomicFactor);
         }
 
         public String toString() {
-            return "UnitTrain.UnitTrainBuilder(division=" + this.division + ", loadedMiles=" + this.loadedMiles + ", locomotiveDaysOnline=" + this.locomotiveDaysOnline + ", carDaysOnline=" + this.carDaysOnline + ", numberOfTrainStarts=" + this.numberOfTrainStarts + ", carHiredOrDailyRate=" + this.carHiredOrDailyRate + ", avgJointFacilityOrHaulageOrLease=" + this.avgJointFacilityOrHaulageOrLease + ", specializedFacilitySvcs=" + this.specializedFacilitySvcs + ")";
+            return "UnitTrain.UnitTrainBuilder(division=" + this.division + ", loadedMiles=" + this.loadedMiles + ", locomotiveDaysOnline=" + this.locomotiveDaysOnline + ", carDaysOnline=" + this.carDaysOnline + ", numberOfTrainStarts=" + this.numberOfTrainStarts + ", networkEconomicFactor=" + this.networkEconomicFactor + ")";
         }
     }
 }
+

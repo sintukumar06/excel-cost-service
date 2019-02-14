@@ -13,8 +13,8 @@ public class TerminalAndYardService {
     @Autowired
     private TerminalYardRepository tyRepository;
 
-    public double getTerminalAndYardOpsCost(RequestInputs inputs) {
-        return inputs.getEmptyReturnRatio() > 0 ? 2 * getTotalCost(inputs) : getTotalCost(inputs);
+    public double getTerminalAndYardOpsCost(RequestInputs inputs, int index) {
+        return index == 0 ? inputs.getEmptyReturnRatio() > 0 ? 2 * getTotalCost(inputs) : getTotalCost(inputs) : 0;
     }
 
     private double getTotalCost(RequestInputs inputs) {

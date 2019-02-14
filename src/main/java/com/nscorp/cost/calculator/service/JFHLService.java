@@ -19,7 +19,7 @@ public class JFHLService {
 
     public double getJointFacilityHaulageLeaseCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);
-        return unitTrain.isAvgJointFacilityOrHaulageOrLease()
+        return inputs.isAvgJointFacilityOrHaulageOrLease()
                 ? fetchJointFacilityHaulageLeaseChargeFrom(inputs, unitTrain)
                 : calculateJointFacilityHaulageLeaseCharge(inputs);
     }

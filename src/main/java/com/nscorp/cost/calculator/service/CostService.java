@@ -48,9 +48,18 @@ public class CostService {
         double perTrainCost = getPerTrainVRCCost(inputs, summaryData, pusherData, coalDumpingCost);
         return CostSummary.builder()
                 .perTrainCost(perTrainCost)
-                .perCarCost(perTrainCost / inputs.getNumberOfCars())
-                .perTonCost(perTrainCost / (inputs.getNumberOfCars() * inputs.getLadingWeightPerCar()))
+                .perCarCost(getPerCarCost(inputs, perTrainCost))
+                .perTonCost(getPerTonCost(inputs, perTrainCost))
                 .build();
+    }
+
+    private double getPerTonCost(RequestInputs inputs, double perTrainCost) {
+        return inputs.isCarHiredOrDailyRate() ?
+                (perTrainCost / (inputs.getNumberOfCars() * inputs.getLadingWeightPerCar())) : 0;
+    }
+
+    private double getPerCarCost(RequestInputs inputs, double perTrainCost) {
+        return inputs.isCarHiredOrDailyRate() ? (perTrainCost / inputs.getNumberOfCars()) : 0;
     }
 
     private double getPerTrainVECCost(RequestInputs inputs, List<SummaryData> summaryData, List<PushersInfo> pusherData, CostSummary coalDumpingCost) {
@@ -68,7 +77,7 @@ public class CostService {
     }
 
     private double getSummaryDataVecTotal(List<SummaryData> summaryData) {
-        return summaryData.parallelStream().mapToDouble(e -> e.getVecTotal()).sum();
+        return summaryData.stream().mapToDouble(e -> e.getVecTotal()).sum();
     }
 
     private double getSummaryDataVrcTotal(List<SummaryData> summaryData) {

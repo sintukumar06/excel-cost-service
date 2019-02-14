@@ -12,10 +12,18 @@ import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 
 @Service
 public class SharedAssetServices {
-    @Autowired
     private DivisionDataRepository gtmRepository;
-    @Autowired
     private TerminalYardRepository tyRepository;
+
+    @Autowired
+    public void setGtmRepository(DivisionDataRepository gtmRepository) {
+        this.gtmRepository = gtmRepository;
+    }
+
+    @Autowired
+    public void setTyRepository(TerminalYardRepository tyRepository) {
+        this.tyRepository = tyRepository;
+    }
 
     public double getSharedAssetAreaCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);

@@ -2,7 +2,6 @@ package com.nscorp.cost.calculator.service;
 
 import com.nscorp.cost.calculator.model.RequestInputs;
 import com.nscorp.cost.calculator.model.SwitchEvent;
-import com.nscorp.cost.calculator.model.UnitTrain;
 import com.nscorp.cost.calculator.repo.TerminalYardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +15,16 @@ public class SpecialFacilityService {
     private TerminalYardRepository tyRepository;
 
     public double getSharedAssetAreaCost(RequestInputs inputs, int index) {
-        UnitTrain unitTrain = inputs.getUnitTrains().get(index);
-        return unitTrain.isSpecializedFacilitySvcs() ?
-                fetchDynamicSpecialFacilityChargeFrom(inputs) : calculateManualSpecialFacilityCharge(inputs);
+        return index == 0 ? computeSAACostForFirstTrain(inputs) : computeSAACostForOtherTrain(inputs);
+    }
+
+    private double computeSAACostForOtherTrain(RequestInputs inputs) {
+        return inputs.isSpecializedFacilitySvcs() ? fetchDynamicSpecialFacilityChargeFrom(inputs) : 0;
+    }
+
+    private double computeSAACostForFirstTrain(RequestInputs inputs) {
+        return inputs.isSpecializedFacilitySvcs()
+                ? fetchDynamicSpecialFacilityChargeFrom(inputs) : calculateManualSpecialFacilityCharge(inputs);
     }
 
     private float calculateManualSpecialFacilityCharge(RequestInputs inputs) {

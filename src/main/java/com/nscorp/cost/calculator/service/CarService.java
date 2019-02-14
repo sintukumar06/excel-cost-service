@@ -26,7 +26,7 @@ public class CarService {
                     (unitTrain.getCarDaysOnline() * input.getManualInput().getCarHireDailyRate()
                             + input.getManualInput().getCarHirePerMile() * unitTrain.getLoadedMiles());
         }
-        if (!isManualCarHireRatePresent(input.getManualInput()) && unitTrain.isCarHiredOrDailyRate()) {
+        if (!isManualCarHireRatePresent(input.getManualInput()) && input.isCarHiredOrDailyRate()) {
             return getCarDailyEquipmentCost(input, unitTrain) + getCarMileageCost(input, unitTrain);
         }
         return 0;
@@ -34,11 +34,11 @@ public class CarService {
 
     public float getCarDailyReplacementRate(RequestInputs input, int index) {
         UnitTrain unitTrain = input.getUnitTrains().get(index);
-        return isCarReplacementRateApplicable(input, unitTrain) ? getCarDailyReplacementCost(input, unitTrain) : 0;
+        return isCarReplacementRateApplicable(input) ? getCarDailyReplacementCost(input, unitTrain) : 0;
     }
 
-    private boolean isCarReplacementRateApplicable(RequestInputs input, UnitTrain unitTrain) {
-        return !"PRIVATE".equalsIgnoreCase(input.getCarOwner()) && unitTrain.isCarHiredOrDailyRate();
+    private boolean isCarReplacementRateApplicable(RequestInputs input) {
+        return !"PRIVATE".equalsIgnoreCase(input.getCarOwner()) && input.isCarHiredOrDailyRate();
     }
 
     private float getCarMileageCost(RequestInputs input, UnitTrain unitTrain) {

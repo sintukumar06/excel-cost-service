@@ -18,10 +18,19 @@ import java.util.stream.IntStream;
 public class PusherService {
     public static final String SUPER_CORE_LINK_RATING = "A";
     private static final String NONE_DIVISION = "NONE";
-    @Autowired
+
     private DivisionDataRepository gtmRepository;
-    @Autowired
     private LocoDataRepository locoRepository;
+
+    @Autowired
+    public void setGtmRepository(DivisionDataRepository gtmRepository) {
+        this.gtmRepository = gtmRepository;
+    }
+
+    @Autowired
+    public void setLocoRepository(LocoDataRepository locoRepository) {
+        this.locoRepository = locoRepository;
+    }
 
     protected List<PushersInfo> getPusherData(final RequestInputs inputs) {
         return IntStream.range(0, ListUtils.emptyIfNull(inputs.getPushers()).size())

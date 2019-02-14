@@ -22,16 +22,16 @@ public class GeneralAdminService {
         this.gtmRepository = gtmRepository;
     }
 
-    public double getGeneralAdminCost(RequestInputs inputs) {
-        return calculateCost(inputs, getAdminCostByCarload(inputs));
+    public double getGeneralAdminCost(RequestInputs inputs, int index) {
+        return index == 0 ? calculateCost(inputs, getAdminCostByCarload(inputs)) : 0;
     }
 
-    public double getGACustomerServiceCost(RequestInputs inputs) {
-        return calculateCost(inputs, getGaCustomerServiceByCarload(inputs));
+    public double getGACustomerServiceCost(RequestInputs inputs, int index) {
+        return index == 0 ? calculateCost(inputs, getGaCustomerServiceByCarload(inputs)) : 0;
     }
 
-    public double getGAMarketingCost(RequestInputs inputs) {
-        return calculateCost(inputs, getGaMarketingByCarload(inputs));
+    public double getGAMarketingCost(RequestInputs inputs, int index) {
+        return index == 0 ? calculateCost(inputs, getGaMarketingByCarload(inputs)) : 0;
     }
 
     public double getGATransportationCost(RequestInputs inputs, int index) {
@@ -43,8 +43,8 @@ public class GeneralAdminService {
         return gtmRepository.getOne(unitTrain.getDivision()).getGaTransportByCW();
     }
 
-    public double getGATaxesCost(RequestInputs inputs) {
-        return inputs.getNumberOfCars() * getGaTaxesByCarload(inputs);
+    public double getGATaxesCost(RequestInputs inputs, int index) {
+        return index == 0 ? inputs.getNumberOfCars() * getGaTaxesByCarload(inputs) : 0;
     }
 
     private double getGaMarketingByCarload(RequestInputs inputs) {

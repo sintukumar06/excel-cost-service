@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocoService {
     public static final String SUPER_CORE_LINK_RATING = "A";
-    @Autowired
     private LocoDataRepository locoRepository;
+
+    @Autowired
+    public void setLocoRepository(LocoDataRepository locoRepository) {
+        this.locoRepository = locoRepository;
+    }
 
     public double getLocoEconomicsCost(RequestInputs inputs, int index) {
         UnitTrain unitTrain = inputs.getUnitTrains().get(index);

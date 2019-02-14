@@ -7,17 +7,17 @@ public class ManualInput {
     private float tasdPerCar;
     private float tareWeightAdjust;
     private float locoWeight;
-    private float networkEconomicFactor;
+    //private float networkEconomicFactor;
 
-    @java.beans.ConstructorProperties({"carHireDailyRate", "carHirePerMile", "bhrrFactorPerCar", "tasdPerCar", "tareWeightAdjust", "locoWeight", "networkEconomicFactor"})
-    public ManualInput(float carHireDailyRate, float carHirePerMile, float bhrrFactorPerCar, float tasdPerCar, float tareWeightAdjust, float locoWeight, float networkEconomicFactor) {
+    @java.beans.ConstructorProperties({"carHireDailyRate", "carHirePerMile", "bhrrFactorPerCar", "tasdPerCar", "tareWeightAdjust", "locoWeight"})
+    public ManualInput(float carHireDailyRate, float carHirePerMile, float bhrrFactorPerCar, float tasdPerCar, float tareWeightAdjust, float locoWeight) {
         this.carHireDailyRate = carHireDailyRate;
         this.carHirePerMile = carHirePerMile;
         this.bhrrFactorPerCar = bhrrFactorPerCar;
         this.tasdPerCar = tasdPerCar;
         this.tareWeightAdjust = tareWeightAdjust;
         this.locoWeight = locoWeight;
-        this.networkEconomicFactor = networkEconomicFactor;
+        //this.networkEconomicFactor = networkEconomicFactor;
     }
 
     public ManualInput() {
@@ -75,14 +75,6 @@ public class ManualInput {
         this.locoWeight = locoWeight;
     }
 
-    public float getNetworkEconomicFactor() {
-        return this.networkEconomicFactor;
-    }
-
-    public void setNetworkEconomicFactor(float networkEconomicFactor) {
-        this.networkEconomicFactor = networkEconomicFactor;
-    }
-
     public boolean equals(final Object o) {
         if (o == this) return true;
         if (!(o instanceof ManualInput)) return false;
@@ -94,7 +86,7 @@ public class ManualInput {
         if (Float.compare(this.getTasdPerCar(), other.getTasdPerCar()) != 0) return false;
         if (Float.compare(this.getTareWeightAdjust(), other.getTareWeightAdjust()) != 0) return false;
         if (Float.compare(this.getLocoWeight(), other.getLocoWeight()) != 0) return false;
-        if (Float.compare(this.getNetworkEconomicFactor(), other.getNetworkEconomicFactor()) != 0) return false;
+//        if (Float.compare(this.getNetworkEconomicFactor(), other.getNetworkEconomicFactor()) != 0) return false;
         return true;
     }
 
@@ -111,12 +103,8 @@ public class ManualInput {
         result = result * PRIME + Float.floatToIntBits(this.getTasdPerCar());
         result = result * PRIME + Float.floatToIntBits(this.getTareWeightAdjust());
         result = result * PRIME + Float.floatToIntBits(this.getLocoWeight());
-        result = result * PRIME + Float.floatToIntBits(this.getNetworkEconomicFactor());
+//        result = result * PRIME + Float.floatToIntBits(this.getNetworkEconomicFactor());
         return result;
-    }
-
-    public String toString() {
-        return "ManualInput(carHireDailyRate=" + this.getCarHireDailyRate() + ", carHirePerMile=" + this.getCarHirePerMile() + ", bhrrFactorPerCar=" + this.getBhrrFactorPerCar() + ", tasdPerCar=" + this.getTasdPerCar() + ", tareWeightAdjust=" + this.getTareWeightAdjust() + ", locoWeight=" + this.getLocoWeight() + ", networkEconomicFactor=" + this.getNetworkEconomicFactor() + ")";
     }
 
     public static class ManualInputBuilder {
@@ -126,7 +114,7 @@ public class ManualInput {
         private float tasdPerCar;
         private float tareWeightAdjust;
         private float locoWeight;
-        private float networkEconomicFactor;
+//        private float networkEconomicFactor;
 
         ManualInputBuilder() {
         }
@@ -161,17 +149,13 @@ public class ManualInput {
             return this;
         }
 
-        public ManualInput.ManualInputBuilder networkEconomicFactor(float networkEconomicFactor) {
-            this.networkEconomicFactor = networkEconomicFactor;
-            return this;
-        }
+//        public ManualInput.ManualInputBuilder networkEconomicFactor(float networkEconomicFactor) {
+//            this.networkEconomicFactor = networkEconomicFactor;
+//            return this;
+//        }
 
         public ManualInput build() {
-            return new ManualInput(carHireDailyRate, carHirePerMile, bhrrFactorPerCar, tasdPerCar, tareWeightAdjust, locoWeight, networkEconomicFactor);
-        }
-
-        public String toString() {
-            return "ManualInput.ManualInputBuilder(carHireDailyRate=" + this.carHireDailyRate + ", carHirePerMile=" + this.carHirePerMile + ", bhrrFactorPerCar=" + this.bhrrFactorPerCar + ", tasdPerCar=" + this.tasdPerCar + ", tareWeightAdjust=" + this.tareWeightAdjust + ", locoWeight=" + this.locoWeight + ", networkEconomicFactor=" + this.networkEconomicFactor + ")";
+            return new ManualInput(carHireDailyRate, carHirePerMile, bhrrFactorPerCar, tasdPerCar, tareWeightAdjust, locoWeight);
         }
     }
 }

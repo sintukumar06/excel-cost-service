@@ -7,6 +7,9 @@
   "carOwner": "PRIVATE",
   "emptyReturnRatio": 1,
   "trainType": "UNIT BULK",
+  "carHiredOrDailyRate": true,
+  "avgJointFacilityOrHaulageOrLease": false,
+  "specializedFacilitySvcs": false,
   "manualInput": {
     "carHireDailyRate": 12,
     "carHirePerMile": 5
@@ -17,10 +20,7 @@
       "loadedMiles": 273,
       "locomotiveDaysOnline": 2,
       "carDaysOnline": 2.5,
-      "numberOfTrainStarts": 3,
-      "carHiredOrDailyRate": true,
-      "avgJointFacilityOrHaulageOrLease": false,
-      "specializedFacilitySvcs": false
+      "numberOfTrainStarts": 3
     }
   ]
 }

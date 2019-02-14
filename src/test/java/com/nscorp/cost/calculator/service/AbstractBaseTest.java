@@ -1,9 +1,6 @@
 package com.nscorp.cost.calculator.service;
 
-import com.nscorp.cost.calculator.model.ManualInput;
-import com.nscorp.cost.calculator.model.RequestInputs;
-import com.nscorp.cost.calculator.model.SwitchEvent;
-import com.nscorp.cost.calculator.model.UnitTrain;
+import com.nscorp.cost.calculator.model.*;
 
 import java.util.Arrays;
 
@@ -26,16 +23,18 @@ public abstract class AbstractBaseTest {
                         .carHireDailyRate(12.0f)
                         .carHirePerMile(5.0f)
                         .build())
+                .pushers(Arrays.asList(PushersInfo.builder().division("S JERSEY CSAO").loadedMiles(27)
+                        .pusherDaysOnline(2).numberOfPushers(4).numberOfPusherStarts(3).build()))
                 .unitTrains(Arrays.asList(UnitTrain.builder()
                         .division("ALABAMA")
                         .loadedMiles(273.0f)
                         .locomotiveDaysOnline(2.00f)
                         .carDaysOnline(2.50f)
                         .numberOfTrainStarts(3)
-                        .carHiredOrDailyRate(true)
-                        .avgJointFacilityOrHaulageOrLease(true)
-                        .specializedFacilitySvcs(false)
                         .build()))
+                .carHiredOrDailyRate(true)
+                .avgJointFacilityOrHaulageOrLease(true)
+                .specializedFacilitySvcs(false)
                 .build();
     }
 }

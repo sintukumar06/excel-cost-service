@@ -44,11 +44,19 @@
       "loadedMiles": 273.3,
       "locomotiveDaysOnline": 2,
       "carDaysOnline": 2.5,
-      "numberOfTrainStarts": 3
+      "numberOfTrainStarts": 3,
+      "networkEconomicFactor": 212.79
     },
     {
       "division": "POCAHONTAS",
       "loadedMiles": 500,
+      "locomotiveDaysOnline": 0,
+      "carDaysOnline": 0,
+      "numberOfTrainStarts": 0
+    },
+    {
+      "division": "ALABAMA",
+      "loadedMiles": 200,
       "locomotiveDaysOnline": 0,
       "carDaysOnline": 0,
       "numberOfTrainStarts": 0
