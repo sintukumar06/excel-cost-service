@@ -80,25 +80,12 @@ dependencies {
             "org.codehaus.cargo:cargo-ant:1.5.0",
             "org.wildfly.core:wildfly-controller-client:3.0.10.Final"
 }
-jacocoTestCoverageVerification {
+jacocoTestReport {
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: [
-                    'com/nscorp/cost/calculator/db/*',
-                    'com/nscorp/cost/calculator/model/*'
-            ])
+            fileTree(dir: it, exclude: ['com/nscorp/cost/calculator/db/**', 'com/nscorp/cost/calculator/model/**'])
         })
     }
-
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.20
-            }
-        }
-    }
-}
-jacocoTestReport {
     reports {
         xml.enabled true
         html.enabled true
@@ -106,7 +93,6 @@ jacocoTestReport {
         html.destination "${buildDir}/reports/coverage"
     }
 }
-check.dependsOn jacocoTestReport
 
 cargo {
     containerId = 'wildfly10x'
