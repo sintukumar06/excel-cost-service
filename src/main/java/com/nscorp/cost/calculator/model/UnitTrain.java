@@ -2,7 +2,10 @@ package com.nscorp.cost.calculator.model;
 
 import com.nscorp.cost.calculator.validation.constraints.Division;
 
+import javax.validation.constraints.NotNull;
+
 public class UnitTrain {
+    @NotNull
     @Division
     private String division;
     private float loadedMiles;
