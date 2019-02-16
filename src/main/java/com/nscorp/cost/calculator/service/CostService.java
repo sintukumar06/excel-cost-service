@@ -14,12 +14,16 @@ import static java.util.Objects.isNull;
 public class CostService {
     @Autowired
     private PusherService pusherService;
-    @Autowired
     private RateIndexRepository riRepository;
     @Autowired
     private CoalDumpingService coalDumpingService;
     @Autowired
     private SummaryDataService summaryDataService;
+
+    @Autowired
+    public void setRiRepository(RateIndexRepository riRepository) {
+        this.riRepository = riRepository;
+    }
 
     public ResponseData computeCost(RequestInputs inputs) {
         List<PushersInfo> pusherData = pusherService.getPusherData(inputs);
