@@ -19,7 +19,7 @@ public class SpecialFacilityService {
     }
 
     public double getSpecializedFacilitiesServicesCost(RequestInputs inputs, int index) {
-        return index == 0 ? computeSAACostForFirstTrain(inputs) : computeSAACostForOtherTrain(inputs);
+        return index == 0 ? computeSAACostForFirstTrain(inputs) : 0;
     }
 
     private double computeSAACostForOtherTrain(RequestInputs inputs) {
